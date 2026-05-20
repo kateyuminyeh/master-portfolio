@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>呼叫音樂節 演出行政統籌 · Kate</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #FFFFFF;
+      --surface: #FFFFFF;
+      --text: #333333;
+      --text-2: #696969;
+      --accent: #db7666;
+      --accent-light: #FDEEED;
+      --deep: #3c242d;
+      --tag-bg: #F4F4F5;
+      --indigo: #585c75;
+      --indigo-light: #EEEDF3;
+      --border: #E8E8E8;
+      --max-w: 860px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Noto Sans TC', system-ui, sans-serif;
+      font-weight: 400;
+      line-height: 1.7;
+    }
+
+    /* NAV */
+    nav {
+      padding: 22px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: var(--surface);
+      z-index: 10;
+    }
+    .back-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text-2);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--accent); }
+    .back-link svg {
+      width: 16px; height: 16px;
+      stroke: currentColor; fill: none;
+      stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+    }
+    .nav-name { font-size: 14px; color: var(--text-2); letter-spacing: 0.03em; }
+
+    /* HERO */
+    .hero {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 52px 40px 0;
+    }
+    .hero-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .hero-title {
+      font-size: clamp(22px, 3.5vw, 32px);
+      font-weight: 300;
+      line-height: 1.35;
+      color: var(--deep);
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+    .hero-title strong { font-weight: 600; }
+    .hero-subtitle {
+      font-size: 14px;
+      color: var(--text-2);
+      line-height: 1.85;
+      max-width: 600px;
+      margin-bottom: 20px;
+    }
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+    .tag {
+      padding: 4px 12px;
+      background: var(--tag-bg);
+      border-radius: 4px;
+      font-size: 11px;
+      color: var(--text-2);
+      letter-spacing: 0.04em;
+    }
+    .hero-meta {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .meta-item {
+      font-size: 12px;
+      color: var(--text-2);
+    }
+    .meta-item strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    /* HERO METRICS */
+    .hero-metrics {
+      max-width: var(--max-w);
+      margin: 32px auto 0;
+      padding: 0 40px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--border);
+    }
+    .hero-metric {
+      padding: 20px 0 20px 20px;
+      border-right: 1px solid var(--border);
+    }
+    .hero-metric:first-child { padding-left: 0; }
+    .hero-metric:last-child { border-right: none; }
+    .hm-value {
+      font-size: clamp(18px, 2vw, 22px);
+      font-weight: 600;
+      color: var(--deep);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 4px;
+    }
+    .hm-label {
+      font-size: 11px;
+      color: var(--text-2);
+      letter-spacing: 0.03em;
+    }
+
+    /* CONTENT */
+    .content {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 52px 40px 88px;
+    }
+
+    /* SECTION */
+    .section { margin-bottom: 52px; }
+    .section-title {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* TWO COL */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+    .col-title {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .col-body {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.9;
+    }
+    .col-body p + p { margin-top: 10px; }
+    .challenge-list {
+      list-style: none;
+      margin-top: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .challenge-item {
+      display: flex;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.7;
+      align-items: flex-start;
+    }
+    .challenge-item::before {
+      content: '—';
+      color: var(--border);
+      flex-shrink: 0;
+    }
+
+    /* ROLE CARDS */
+    .role-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .role-card {
+      background: var(--indigo-light);
+      border-radius: 8px;
+      padding: 20px;
+    }
+    .role-card-num {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--indigo);
+      letter-spacing: 0.1em;
+      opacity: 0.6;
+      margin-bottom: 8px;
+    }
+    .role-card-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--indigo);
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+    .role-card-desc {
+      font-size: 12px;
+      color: var(--text-2);
+      line-height: 1.8;
+    }
+
+    /* PROCESS IMAGE */
+    .step-image {
+      margin-top: 14px;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .step-image img {
+      width: 100%;
+      display: block;
+    }
+    .step-image-caption {
+      font-size: 11px;
+      color: var(--text-2);
+      padding: 8px 12px;
+      background: var(--tag-bg);
+      letter-spacing: 0.02em;
+    }
+
+    /* PROCESS */
+    .process-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+    }
+    .process-step {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 16px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .step-num {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+      padding-top: 2px;
+    }
+    .step-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--deep);
+      margin-bottom: 6px;
+    }
+    .step-desc {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.85;
+    }
+
+    /* OUTCOME + SKILLS */
+    .outcome-skills {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+    .outcome-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .outcome-item {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.75;
+    }
+    .outcome-item::before {
+      content: '✓';
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 11px;
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+    .skill-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .skill-item {
+      background: var(--tag-bg);
+      border-radius: 7px;
+      padding: 14px 16px;
+    }
+    .skill-item-name {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--deep);
+      margin-bottom: 4px;
+    }
+    .skill-item-desc {
+      font-size: 12px;
+      color: var(--text-2);
+      line-height: 1.75;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-left { font-size: 13px; color: var(--text-2); }
+    .footer-right a { font-size: 13px; color: var(--accent); text-decoration: none; }
+    .footer-right a:hover { text-decoration: underline; }
+
+    /* RESPONSIVE */
+    @media (max-width: 720px) {
+      nav { padding: 18px 20px; }
+      .hero-inner { padding: 36px 20px 0; }
+      .hero-metrics { padding: 0 20px; grid-template-columns: repeat(2, 1fr); }
+      .hero-metric { padding: 16px 0 16px 16px; }
+      .hero-metric:nth-child(2) { border-right: none; }
+      .content { padding: 36px 20px 64px; }
+      .two-col { grid-template-columns: 1fr; gap: 24px; }
+      .role-cards { grid-template-columns: 1fr; }
+      .outcome-skills { grid-template-columns: 1fr; gap: 32px; }
+      footer { flex-direction: column; gap: 8px; text-align: center; padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="back-link" href="../index.html">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      返回作品集
+    </a>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-label">大型活動 · 演出行政 · 跨部門協作</div>
+      <h1 class="hero-title">
+        呼叫音樂節<br><strong>40 組藝人與 4 個舞台的演出行政統籌</strong>
+      </h1>
+      <p class="hero-subtitle">
+        在短期高壓、分工尚未完全明確的籌備情境中，建立演出資料架構，整合藝人、舞台與合作單位需求，推動演出前置與現場執行順利完成。
+      </p>
+      <div class="hero-tags">
+        <span class="tag">大型活動執行</span>
+        <span class="tag">跨部門協作</span>
+        <span class="tag">藝人行政統籌</span>
+        <span class="tag">資料整合</span>
+        <span class="tag">現場管理</span>
+      </div>
+      <div class="hero-meta">
+        <span class="meta-item">角色 &nbsp;<strong>演出行政統籌 · 資料架構建立 · 現場後台協調</strong></span>
+        <span class="meta-item">期間 &nbsp;<strong>2025 年 9 月至 11 月</strong></span>
+      </div>
+    </div>
+    <div class="hero-metrics">
+      <div class="hero-metric">
+        <div class="hm-value">40 組</div>
+        <div class="hm-label">演出藝人整合</div>
+      </div>
+      <div class="hero-metric">
+        <div class="hm-value">4 個</div>
+        <div class="hm-label">舞台需求管理</div>
+      </div>
+      <div class="hero-metric">
+        <div class="hm-value">4 位</div>
+        <div class="hm-label">後台經理配置</div>
+      </div>
+      <div class="hero-metric">
+        <div class="hm-value">5+ 組</div>
+        <div class="hm-label">合作單位對接</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- BACKGROUND + CHALLENGE -->
+    <div class="two-col section">
+      <div>
+        <div class="col-title">專案背景</div>
+        <div class="col-body">
+          <p>呼叫音樂節為 2025 年執行的大型音樂節專案，工作範圍包含整合 40 組藝人、4 個舞台的演出需求，並與硬體舞台組、舞台經理組、後勤總務組、媒體宣傳公司與主辦單位協作。</p>
+          <p>我負責藝人與演出相關的行政統籌，在多個合作單位並行、主辦分工與權責尚未完全到位的情況下，主動建立資訊架構，確保各方能順利推進。</p>
+        </div>
+      </div>
+      <div>
+        <div class="col-title">核心挑戰</div>
+        <div class="col-body">
+          <p>在行政人力有限、分工與權責尚未完全清楚的情況下，快速建立可被多方使用的資訊架構，讓演出前置與現場執行能穩定推進。</p>
+          <ul class="challenge-list">
+            <li class="challenge-item">40 組藝人需求分散，需快速統整與確認</li>
+            <li class="challenge-item">主辦與協辦權責未明，需主動補位推進</li>
+            <li class="challenge-item">多個合作單位並行，資訊需即時同步</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ROLE CARDS -->
+    <div class="section">
+      <div class="section-title">我的角色</div>
+      <div class="role-cards">
+        <div class="role-card">
+          <div class="role-card-num">01</div>
+          <div class="role-card-title">跨單位資訊窗口</div>
+          <div class="role-card-desc">擔任藝人、主辦、舞台、後勤與媒體宣傳之間的主要資訊窗口，整理需求並協助各單位判斷下一步。</div>
+        </div>
+        <div class="role-card">
+          <div class="role-card-num">02</div>
+          <div class="role-card-title">資料架構建立</div>
+          <div class="role-card-desc">建立 Google Sheet 演出資料大表，集中管理藝人資料、舞台需求、後台資訊與宣傳需求，供多方即時查閱。</div>
+        </div>
+        <div class="role-card">
+          <div class="role-card-num">03</div>
+          <div class="role-card-title">現場人力配置與推進</div>
+          <div class="role-card-desc">快速配置 4 位舞台後台經理，建立現場分工，並在活動期間支援後台管理與臨場溝通。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROCESS -->
+    <div class="section">
+      <div class="section-title">執行過程</div>
+      <ol class="process-list">
+        <li class="process-step">
+          <span class="step-num">01</span>
+          <div>
+            <div class="step-title">建立演出資料大表</div>
+            <div class="step-desc">在分工與權責尚未完全明確的情況下，主動建立 Google Sheet 資料大表，集中整理 40 組藝人的基本資料、演出需求、舞台資訊與後台需求，作為多方共用的資訊基礎。</div>
+            <div class="step-image">
+              <img src="../assets/images/hujiao-sheet.png" alt="呼叫音樂節 2025 演出需求統整大表">
+              <div class="step-image-caption">演出需求統整大表：追蹤每組藝人的工作人員確認、資料繳交（歌單、音檔、歌詞、Rider）等項目</div>
+            </div>
+          </div>
+        </li>
+        <li class="process-step">
+          <span class="step-num">02</span>
+          <div>
+            <div class="step-title">對齊各單位資訊需求</div>
+            <div class="step-desc">依不同合作單位的需求重新整理資訊，協助硬體舞台組、舞台經理組、後勤總務組與媒體宣傳公司快速找到各自需要確認的內容，降低跨單位溝通成本。</div>
+          </div>
+        </li>
+        <li class="process-step">
+          <span class="step-num">03</span>
+          <div>
+            <div class="step-title">配置後台管理人力</div>
+            <div class="step-desc">在短時間內找到 4 位舞台後台經理，將現場執行工作分層處理，讓演出行政能從統籌層級掌握整體進度，同時確保每個舞台有獨立的執行對口。</div>
+          </div>
+        </li>
+        <li class="process-step">
+          <span class="step-num">04</span>
+          <div>
+            <div class="step-title">支援媒體宣傳資料整合</div>
+            <div class="step-desc">因具備廣告與媒體協作經驗，能快速理解宣傳公司的資料需求，協助整理藝人資訊與宣傳素材，減少跨單位來回確認的時間。</div>
+          </div>
+        </li>
+        <li class="process-step">
+          <span class="step-num">05</span>
+          <div>
+            <div class="step-title">活動現場後台統籌</div>
+            <div class="step-desc">活動期間負責後台統籌管理，支援藝人報到、識別證發放、後台動線規劃與臨場溝通，確保 40 組藝人團隊能順利完成演出。</div>
+          </div>
+        </li>
+      </ol>
+    </div>
+
+    <!-- OUTCOME + SKILLS -->
+    <div class="section">
+      <div class="outcome-skills">
+        <div>
+          <div class="section-title">專案成果</div>
+          <ul class="outcome-list">
+            <li class="outcome-item">40 組藝人演出需求完成統整，支援 4 個舞台前置作業與現場執行</li>
+            <li class="outcome-item">4 位後台經理完成配置，讓現場執行依舞台分工並能即時回報</li>
+            <li class="outcome-item">多個合作單位資訊完成整合，演出行政與藝人接待流程順利完成</li>
+          </ul>
+        </div>
+        <div>
+          <div class="section-title">可轉移能力</div>
+          <div class="skill-stack">
+            <div class="skill-item">
+              <div class="skill-item-name">複雜資訊整合能力</div>
+              <div class="skill-item-desc">將分散的藝人、舞台與後台資訊建構成共用架構，可對應均一企業合作案中的跨組資訊整合與成效追蹤</div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-item-name">權責模糊中的主動推進</div>
+              <div class="skill-item-desc">分工不明時主動建立可執行流程，可對應企業合作初期需求未定義清楚時的推進與補位能力</div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-item-name">現場多方關係協調</div>
+              <div class="skill-item-desc">兼顧藝人、工作人員與合作單位的需求與感受，可對應企業志工活動與合作專案的現場執行與關係維繫</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="footer-right">
+      <a href="https://www.linkedin.com/in/kate-yeh-64955873/" target="_blank" rel="noopener">LinkedIn → Kate Yeh</a>
+    </div>
+  </footer>
+
+</body>
+</html>

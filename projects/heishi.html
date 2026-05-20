@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>黑市音樂 營運系統建構 · Kate</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #FFFFFF;
+      --surface: #FFFFFF;
+      --text: #333333;
+      --text-2: #696969;
+      --accent: #db7666;
+      --deep: #3c242d;
+      --tag-bg: #F4F4F5;
+      --indigo: #585c75;
+      --indigo-light: #EEEDF3;
+      --border: #E8E8E8;
+      --max-w: 860px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Noto Sans TC', system-ui, sans-serif;
+      font-weight: 400;
+      line-height: 1.7;
+    }
+
+    nav {
+      padding: 22px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: var(--surface);
+      z-index: 10;
+    }
+    .back-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text-2);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--accent); }
+    .back-link svg {
+      width: 16px; height: 16px;
+      stroke: currentColor; fill: none;
+      stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+    }
+    .nav-name { font-size: 14px; color: var(--text-2); letter-spacing: 0.03em; }
+
+    .hero {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 52px 40px 0;
+    }
+    .hero-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .hero-title {
+      font-size: clamp(22px, 3.5vw, 32px);
+      font-weight: 300;
+      line-height: 1.35;
+      color: var(--deep);
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+    .hero-title strong { font-weight: 600; }
+    .hero-subtitle {
+      font-size: 14px;
+      color: var(--text-2);
+      line-height: 1.85;
+      max-width: 600px;
+      margin-bottom: 20px;
+    }
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+    .tag {
+      padding: 4px 12px;
+      background: var(--tag-bg);
+      border-radius: 4px;
+      font-size: 11px;
+      color: var(--text-2);
+      letter-spacing: 0.04em;
+    }
+    .hero-meta {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .meta-item { font-size: 12px; color: var(--text-2); }
+    .meta-item strong { color: var(--text); font-weight: 500; }
+
+    .hero-metrics {
+      max-width: var(--max-w);
+      margin: 32px auto 0;
+      padding: 0 40px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--border);
+    }
+    .hero-metric {
+      padding: 20px 0 20px 20px;
+      border-right: 1px solid var(--border);
+    }
+    .hero-metric:first-child { padding-left: 0; }
+    .hero-metric:last-child { border-right: none; }
+    .hm-value {
+      font-size: clamp(18px, 2vw, 22px);
+      font-weight: 600;
+      color: var(--deep);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 4px;
+    }
+    .hm-label { font-size: 11px; color: var(--text-2); letter-spacing: 0.03em; }
+
+    .content {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 52px 40px 88px;
+    }
+
+    .section { margin-bottom: 52px; }
+    .section-title {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+    .col-title {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .col-body { font-size: 13px; color: var(--text-2); line-height: 1.9; }
+    .col-body p + p { margin-top: 10px; }
+    .challenge-list {
+      list-style: none;
+      margin-top: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .challenge-item {
+      display: flex;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.7;
+      align-items: flex-start;
+    }
+    .challenge-item::before { content: '—'; color: var(--border); flex-shrink: 0; }
+
+    .role-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .role-card { background: var(--indigo-light); border-radius: 8px; padding: 20px; }
+    .role-card-num {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--indigo);
+      letter-spacing: 0.1em;
+      opacity: 0.6;
+      margin-bottom: 8px;
+    }
+    .role-card-title { font-size: 13px; font-weight: 600; color: var(--indigo); margin-bottom: 8px; line-height: 1.4; }
+    .role-card-desc { font-size: 12px; color: var(--text-2); line-height: 1.8; }
+
+    /* STEP / SECTION IMAGE */
+    .step-image {
+      margin-top: 14px;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .step-image img {
+      width: 100%;
+      display: block;
+    }
+    .step-image-caption {
+      font-size: 11px;
+      color: var(--text-2);
+      padding: 8px 12px;
+      background: var(--tag-bg);
+      letter-spacing: 0.02em;
+    }
+
+    .process-list { list-style: none; display: flex; flex-direction: column; }
+    .process-step {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 16px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .step-num { font-size: 11px; font-weight: 600; color: var(--accent); letter-spacing: 0.05em; padding-top: 2px; }
+    .step-title { font-size: 14px; font-weight: 600; color: var(--deep); margin-bottom: 6px; }
+    .step-desc { font-size: 13px; color: var(--text-2); line-height: 1.85; }
+
+    .outcome-skills { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+    .outcome-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .outcome-item {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.75;
+    }
+    .outcome-item::before {
+      content: '✓';
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 11px;
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+    .skill-stack { display: flex; flex-direction: column; gap: 10px; }
+    .skill-item { background: var(--tag-bg); border-radius: 7px; padding: 14px 16px; }
+    .skill-item-name { font-size: 12px; font-weight: 600; color: var(--deep); margin-bottom: 4px; }
+    .skill-item-desc { font-size: 12px; color: var(--text-2); line-height: 1.75; }
+
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 22px;
+      border: 1.5px solid var(--border);
+      border-radius: 7px;
+      font-size: 13px;
+      color: var(--text-2);
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .project-link:hover { border-color: var(--accent); color: var(--accent); }
+    .project-link svg {
+      width: 13px; height: 13px;
+      stroke: currentColor; fill: none;
+      stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-left { font-size: 13px; color: var(--text-2); }
+    .footer-right a { font-size: 13px; color: var(--accent); text-decoration: none; }
+    .footer-right a:hover { text-decoration: underline; }
+
+    @media (max-width: 720px) {
+      nav { padding: 18px 20px; }
+      .hero-inner { padding: 36px 20px 0; }
+      .hero-metrics { padding: 0 20px; grid-template-columns: repeat(2, 1fr); }
+      .hero-metric { padding: 16px 0 16px 16px; }
+      .hero-metric:nth-child(2) { border-right: none; }
+      .content { padding: 36px 20px 64px; }
+      .two-col { grid-template-columns: 1fr; gap: 24px; }
+      .role-cards { grid-template-columns: 1fr; }
+      .outcome-skills { grid-template-columns: 1fr; gap: 32px; }
+      .arch-flow { gap: 4px; }
+      footer { flex-direction: column; gap: 8px; text-align: center; padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="back-link" href="../index.html">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      返回作品集
+    </a>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-label">系統設計 · 流程優化 · 跨角色整合</div>
+      <h1 class="hero-title">
+        黑市音樂<br><strong>組織轉型期的營運系統建構</strong>
+      </h1>
+      <p class="hero-subtitle">
+        在公司轉型的多重壓力下，分析四種角色的不同需求，設計自動化資料架構，將碎片化的演出與財務資訊整合為可信任的單一事實來源。
+      </p>
+      <div class="hero-tags">
+        <span class="tag">流程設計</span>
+        <span class="tag">Google Sheet</span>
+        <span class="tag">自動化工具</span>
+        <span class="tag">財務模組化</span>
+        <span class="tag">Notion 整合</span>
+      </div>
+      <div class="hero-meta">
+        <span class="meta-item">角色 &nbsp;<strong>系統設計主導 · 工具架構規劃 · 跨角色需求整合</strong></span>
+        <span class="meta-item">背景 &nbsp;<strong>黑市音樂個人公司轉型為外商台灣分公司期間</strong></span>
+      </div>
+    </div>
+    <div class="hero-metrics">
+      <div class="hero-metric">
+        <div class="hm-value">4 種</div>
+        <div class="hm-label">角色需求分別整合</div>
+      </div>
+      <div class="hero-metric">
+        <div class="hm-value">3 → 1</div>
+        <div class="hm-label">重工層數壓縮</div>
+      </div>
+      <div class="hero-metric">
+        <div class="hm-value">4 個</div>
+        <div class="hm-label">工具自動化串接</div>
+      </div>
+      <div class="hero-metric">
+        <div class="hm-value">2 個</div>
+        <div class="hm-label">功能模組建構</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <div class="two-col section">
+      <div>
+        <div class="col-title">專案背景</div>
+        <div class="col-body">
+          <p>黑市音樂在由個人公司轉型為外商台灣分公司的過程中，面對股東監督、營運管理與多組藝人管理的多重壓力，核心痛點在於：同一筆演出資料（如演出行程）由藝人、經紀執行、財務三方各自記錄。</p>
+          <p>一旦行程變動，資訊不同步便導致溝通落差與帳務錯誤。我設定的目標是設計一套「單次輸入、多方應用」的自動化工作流程，讓不同工具習慣的夥伴都能順暢運作。</p>
+        </div>
+      </div>
+      <div>
+        <div class="col-title">核心挑戰</div>
+        <div class="col-body">
+          <p>不能設計一個巨大的單一表格強迫所有人使用，而是需要在四種角色之間找到各自最輕量的操作路徑。</p>
+          <ul class="challenge-list">
+            <li class="challenge-item">老闆、藝人、經紀執行、財務的工具習慣與資訊深度需求各不相同</li>
+            <li class="challenge-item">行程一旦變動，三份資料需手動同步，重工且容易出錯</li>
+            <li class="challenge-item">每組藝人的分潤合約條件不同，財務報表邏輯高度客製化</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">我的角色</div>
+      <div class="role-cards">
+        <div class="role-card">
+          <div class="role-card-num">01</div>
+          <div class="role-card-title">多方需求分析</div>
+          <div class="role-card-desc">分析四種角色（老闆、藝人、經紀、財務）的工具習慣與資訊深度需求，設計各自最輕量的操作路徑，而非強迫所有人使用同一介面。</div>
+        </div>
+        <div class="role-card">
+          <div class="role-card-num">02</div>
+          <div class="role-card-title">跨工具自動化架構</div>
+          <div class="role-card-desc">以 Google Calendar 為統一輸入端，透過 Zapier 自動串接 Notion 資料庫與 Google Sheets，讓行程異動時各端即時同步，消除手動更新重工。</div>
+        </div>
+        <div class="role-card">
+          <div class="role-card-num">03</div>
+          <div class="role-card-title">財務模組化設計</div>
+          <div class="role-card-desc">建立專案別財務分潤系統，以 Google App Script 從主帳目產出各藝人專屬報表，將複雜的客製分潤邏輯標準化，財務端只需維護主資料庫。</div>
+        </div>
+      </div>
+
+      <div class="step-image" style="margin-top: 20px;">
+        <img src="../assets/images/heishi-arch.png" alt="系統架構圖：資訊對齊自動化模組 + 專案別財務分潤模組">
+        <div class="step-image-caption">完整系統架構：上層為 Zapier 串接的資訊對齊模組，下層為 Google Apps Script 驅動的專案別財務分潤模組</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">執行過程</div>
+      <ol class="process-list">
+        <li class="process-step">
+          <span class="step-num">01</span>
+          <div>
+            <div class="step-title">梳理痛點與角色需求</div>
+            <div class="step-desc">盤點三層重工的根本原因，訪談各角色的實際工作流程，確認不同工具習慣與所需的資訊深度，作為架構設計的依據。</div>
+          </div>
+        </li>
+        <li class="process-step">
+          <span class="step-num">02</span>
+          <div>
+            <div class="step-title">設計資訊對齊與自動化模組</div>
+            <div class="step-desc">以 Google Calendar 為統一輸入端，透過 Zapier 串接 Notion 與 Google Sheets，讓行程資訊「輸入一次、四端同步」；老闆和藝人用 Calendar、經紀用 Notion、財務用試算表，各走最輕量的路徑。</div>
+            <div class="step-image">
+              <img src="../assets/images/heishi-calendar.png" alt="Google Calendar 介面：Zapier 自動帶入 Notion 頁面連結">
+              <div class="step-image-caption">First Contact 輸入 Google Calendar 後，Zapier 自動在 event 中帶入對應 Notion 頁面連結，藝人端點擊即可查看完整活動細節</div>
+            </div>
+          </div>
+        </li>
+        <li class="process-step">
+          <span class="step-num">03</span>
+          <div>
+            <div class="step-title">建立專案別財務分潤系統</div>
+            <div class="step-desc">將每組藝人的每一個活動定義為獨立「專案別」，以 Google App Script 從主帳目自動產出各藝人財務報表；複雜的分潤邏輯（不同合約年度、不同分潤比）預設為公式，財務端只需選取對應專案即可完成計算。</div>
+            <div class="step-image">
+              <img src="../assets/images/heishi-sync.png" alt="Notion 資料庫與 Google Sheets 財務表同步畫面">
+              <div class="step-image-caption">Google Calendar 輸入後，活動基本資訊自動帶入 Notion 資料庫（左）與財務收支表（下），達成資料單次輸入、多方自動對齊</div>
+            </div>
+          </div>
+        </li>
+        <li class="process-step">
+          <span class="step-num">04</span>
+          <div>
+            <div class="step-title">落地與驗證</div>
+            <div class="step-desc">確認各角色都能在自己熟悉的工具中正確操作，並在實際行程異動時驗證自動同步是否正常運作，確保系統被實際使用而非束之高閣。</div>
+          </div>
+        </li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <div class="outcome-skills">
+        <div>
+          <div class="section-title">專案成果</div>
+          <ul class="outcome-list">
+            <li class="outcome-item">三方分散記錄的資料重工問題消除，達成單次輸入、四端即時同步更新</li>
+            <li class="outcome-item">財務分潤流程模組化，各藝人報表可從主帳目快速產出，不再需要個別客製</li>
+            <li class="outcome-item">四種角色各自使用最熟悉的工具，系統設計符合實際操作習慣，真正被落地使用</li>
+          </ul>
+        </div>
+        <div>
+          <div class="section-title">可轉移能力</div>
+          <div class="skill-stack">
+            <div class="skill-item">
+              <div class="skill-item-name">多方需求分析與方案設計</div>
+              <div class="skill-item-desc">在利害關係人需求衝突時找到兼顧各方的解法，對應 CSM 理解企業客戶需求並設計合作方案的能力</div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-item-name">Google Sheet 與工具整合能力</div>
+              <div class="skill-item-desc">跨平台自動化串接與模組化資料設計，直接對應 JD 強調的資料統整與工具使用技能</div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-item-name">流程標準化設計</div>
+              <div class="skill-item-desc">將一次性的客製作業轉化為可重複執行的標準流程，對應企業合作案中的成效追蹤與可擴充性</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" style="margin-bottom: 0;">
+      <div class="section-title">專案說明</div>
+      <a class="project-link"
+         href="https://kate-yuminyeh.notion.site/companyoperation?pvs=74"
+         target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24">
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+          <polyline points="15 3 21 3 21 9"/>
+          <line x1="10" y1="14" x2="21" y2="3"/>
+        </svg>
+        查看完整專案說明（Notion）
+      </a>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="footer-right">
+      <a href="https://www.linkedin.com/in/kate-yeh-64955873/" target="_blank" rel="noopener">LinkedIn → Kate Yeh</a>
+    </div>
+  </footer>
+
+</body>
+</html>

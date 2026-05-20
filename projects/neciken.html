@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>南西肯恩《你是平靜的》專輯募資案 · Kate</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #FFFFFF;
+      --surface: #FFFFFF;
+      --text: #333333;
+      --text-2: #696969;
+      --accent: #db7666;
+      --accent-light: #FDEEED;
+      --deep: #3c242d;
+      --tag-bg: #F4F4F5;
+      --indigo: #585c75;
+      --indigo-light: #EEEDF3;
+      --border: #E8E8E8;
+      --max-w: 860px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Noto Sans TC', system-ui, sans-serif;
+      font-weight: 400;
+      line-height: 1.7;
+    }
+
+    /* NAV */
+    nav {
+      padding: 22px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: var(--surface);
+      z-index: 10;
+    }
+    .back-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text-2);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--accent); }
+    .back-link svg {
+      width: 16px; height: 16px;
+      stroke: currentColor; fill: none;
+      stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+    }
+    .nav-name { font-size: 14px; color: var(--text-2); letter-spacing: 0.03em; }
+
+    /* HERO */
+    .hero {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 52px 40px 0;
+    }
+    .hero-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .hero-title {
+      font-size: clamp(22px, 3.5vw, 32px);
+      font-weight: 300;
+      line-height: 1.35;
+      color: var(--deep);
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+    .hero-title strong { font-weight: 600; }
+    .hero-subtitle {
+      font-size: 14px;
+      color: var(--text-2);
+      line-height: 1.85;
+      max-width: 600px;
+      margin-bottom: 20px;
+    }
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+    .tag {
+      padding: 4px 12px;
+      background: var(--tag-bg);
+      border-radius: 4px;
+      font-size: 11px;
+      color: var(--text-2);
+      letter-spacing: 0.04em;
+    }
+    .hero-meta {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .meta-item {
+      font-size: 12px;
+      color: var(--text-2);
+    }
+    .meta-item strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    /* HERO METRICS */
+    .hero-metrics {
+      max-width: var(--max-w);
+      margin: 32px auto 0;
+      padding: 0 40px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--border);
+    }
+    .hero-metric {
+      padding: 20px 0 20px 20px;
+      border-right: 1px solid var(--border);
+    }
+    .hero-metric:first-child { padding-left: 0; }
+    .hero-metric:last-child { border-right: none; }
+    .hm-value {
+      font-size: clamp(18px, 2vw, 22px);
+      font-weight: 600;
+      color: var(--deep);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 4px;
+    }
+    .hm-label {
+      font-size: 11px;
+      color: var(--text-2);
+      letter-spacing: 0.03em;
+    }
+
+    /* CONTENT */
+    .content {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 52px 40px 88px;
+    }
+
+    /* SECTION */
+    .section { margin-bottom: 52px; }
+    .section-title {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* TWO COL */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+    .col-title {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .col-body {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.9;
+    }
+    .col-body p + p { margin-top: 10px; }
+    .challenge-list {
+      list-style: none;
+      margin-top: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .challenge-item {
+      display: flex;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.7;
+      align-items: flex-start;
+    }
+    .challenge-item::before {
+      content: '—';
+      color: var(--border);
+      flex-shrink: 0;
+    }
+
+    /* ROLE CARDS */
+    .role-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .role-card {
+      background: var(--indigo-light);
+      border-radius: 8px;
+      padding: 20px;
+    }
+    .role-card-num {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--indigo);
+      letter-spacing: 0.1em;
+      opacity: 0.6;
+      margin-bottom: 8px;
+    }
+    .role-card-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--indigo);
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+    .role-card-desc {
+      font-size: 12px;
+      color: var(--text-2);
+      line-height: 1.8;
+    }
+
+    /* PROCESS */
+    .process-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+    }
+    .process-step {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 16px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .step-num {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+      padding-top: 2px;
+    }
+    .step-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--deep);
+      margin-bottom: 6px;
+    }
+    .step-desc {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.85;
+    }
+
+    /* OUTCOME + SKILLS */
+    .outcome-skills {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+    .outcome-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .outcome-item {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.75;
+    }
+    .outcome-item::before {
+      content: '✓';
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 11px;
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+    .skill-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .skill-item {
+      background: var(--tag-bg);
+      border-radius: 7px;
+      padding: 14px 16px;
+    }
+    .skill-item-name {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--deep);
+      margin-bottom: 4px;
+    }
+    .skill-item-desc {
+      font-size: 12px;
+      color: var(--text-2);
+      line-height: 1.75;
+    }
+
+    /* PROJECT LINK */
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 22px;
+      border: 1.5px solid var(--border);
+      border-radius: 7px;
+      font-size: 13px;
+      color: var(--text-2);
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .project-link:hover { border-color: var(--accent); color: var(--accent); }
+    .project-link svg {
+      width: 13px; height: 13px;
+      stroke: currentColor; fill: none;
+      stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-left { font-size: 13px; color: var(--text-2); }
+    .footer-right a { font-size: 13px; color: var(--accent); text-decoration: none; }
+    .footer-right a:hover { text-decoration: underline; }
+
+    /* RESPONSIVE */
+    @media (max-width: 720px) {
+      nav { padding: 18px 20px; }
+      .hero-inner { padding: 36px 20px 0; }
+      .hero-metrics { padding: 0 20px; grid-template-columns: repeat(2, 1fr); }
+      .hero-metric { padding: 16px 0 16px 16px; }
+      .hero-metric:nth-child(2) { border-right: none; }
+      .content { padding: 36px 20px 64px; }
+      .two-col { grid-template-columns: 1fr; gap: 24px; }
+      .role-cards { grid-template-columns: 1fr; }
+      .outcome-skills { grid-template-columns: 1fr; gap: 32px; }
+      footer { flex-direction: column; gap: 8px; text-align: center; padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="back-link" href="../index.html">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      返回作品集
+    </a>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-label">群眾募資 · 專案管理 · 客戶關係</div>
+      <h1 class="hero-title">
+        南西肯恩<br><strong>《你是平靜的》專輯募資案</strong>
+      </h1>
+      <p class="hero-subtitle">
+        將創作理念轉化為群眾支持，完成從企劃、商品開發到 1,200+ 筆回饋交付的完整執行。
+      </p>
+      <div class="hero-tags">
+        <span class="tag">群眾募資</span>
+        <span class="tag">音樂發行</span>
+        <span class="tag">粉絲關係經營</span>
+        <span class="tag">專案管理</span>
+        <span class="tag">商品開發</span>
+      </div>
+      <div class="hero-meta">
+        <span class="meta-item">角色 &nbsp;<strong>主要專案窗口 · 企劃整合 · 執行交付</strong></span>
+        <span class="meta-item">期間 &nbsp;<strong>2023 年 9 月至 12 月</strong></span>
+      </div>
+    </div>
+    <div class="hero-metrics">
+      <div class="hero-metric">
+        <div class="hm-value">NT$1,708,391</div>
+        <div class="hm-label">最終募資金額</div>
+      </div>
+      <div class="hero-metric">
+        <div class="hm-value">12 小時</div>
+        <div class="hm-label">上線後突破百萬</div>
+      </div>
+      <div class="hero-metric">
+        <div class="hm-value">1,200+</div>
+        <div class="hm-label">支持者參與</div>
+      </div>
+      <div class="hero-metric">
+        <div class="hm-value">8 種</div>
+        <div class="hm-label">回饋品規劃與交付</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- BACKGROUND + CHALLENGE -->
+    <div class="two-col section">
+      <div>
+        <div class="col-title">專案背景</div>
+        <div class="col-body">
+          <p>南西肯恩《你是平靜的》專輯募資案，是黑市音樂與貝殼放大合作的指標性案例，目標是透過募資形式讓樂迷以更高參與感的方式支持專輯製作。</p>
+          <p>平台希望建立具代表性的音樂募資範例，廠牌希望驗證樂團的商業轉化能力，樂團則期望給樂迷高品質且有誠意的回饋。</p>
+        </div>
+      </div>
+      <div>
+        <div class="col-title">核心挑戰</div>
+        <div class="col-body">
+          <p>在時間壓力下快速整合樂團細膩且多元的想法，轉化為成本可行、風格一致且能順利交付的方案。</p>
+          <ul class="challenge-list">
+            <li class="challenge-item">樂團沒有募資經驗，對商品品質與資訊公開方式極度謹慎</li>
+            <li class="challenge-item">問卷、頁面、商品開發、廣告、出貨需同步推進</li>
+            <li class="challenge-item">追求高品質商品的同時，需控制成本維持執行可行性</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ROLE CARDS -->
+    <div class="section">
+      <div class="section-title">我的角色</div>
+      <div class="role-cards">
+        <div class="role-card">
+          <div class="role-card-num">01</div>
+          <div class="role-card-title">跨方窗口整合</div>
+          <div class="role-card-desc">擔任募資平台、樂團與廠牌之間的主要溝通窗口，整合各方期待並推動決策。</div>
+        </div>
+        <div class="role-card">
+          <div class="role-card-num">02</div>
+          <div class="role-card-title">企劃方向與商品收斂</div>
+          <div class="role-card-desc">大量蒐集 reference，協助樂團具體判斷商品方向，在高品質要求與成本之間找到可執行的平衡點。</div>
+        </div>
+        <div class="role-card">
+          <div class="role-card-num">03</div>
+          <div class="role-card-title">內容製作與執行交付</div>
+          <div class="role-card-desc">撰寫頁面文案、製作視覺素材，並統籌回饋商品生產、備貨與出貨流程。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROCESS -->
+    <div class="section">
+      <div class="section-title">執行過程</div>
+      <ol class="process-list">
+        <li class="process-step">
+          <span class="step-num">01</span>
+          <div>
+            <div class="step-title">前測問卷與方向確認</div>
+            <div class="step-desc">透過問卷了解核心粉絲對募資形式與回饋商品的期待，作為後續方案設計的依據。</div>
+          </div>
+        </li>
+        <li class="process-step">
+          <span class="step-num">02</span>
+          <div>
+            <div class="step-title">回饋方案與商品開發</div>
+            <div class="step-desc">蒐集大量 reference 協助樂團收斂商品方向，並提早邀請設計師進入討論，在品質與成本間找到可執行的平衡點。</div>
+          </div>
+        </li>
+        <li class="process-step">
+          <span class="step-num">03</span>
+          <div>
+            <div class="step-title">頁面內容與素材製作</div>
+            <div class="step-desc">整理頁面敘事邏輯、撰寫大部分文案，並製作部分素材；同時協調專輯情報公開節奏，確保頁面資訊與發行計畫一致。</div>
+          </div>
+        </li>
+        <li class="process-step">
+          <span class="step-num">04</span>
+          <div>
+            <div class="step-title">上線策略與推廣準備</div>
+            <div class="step-desc">預先尋找廣告投放夥伴，確保上線後立即進入推廣節奏。2023/09/15 正式上線後 12 小時內突破百萬，並透過新聞稿擴大聲量。</div>
+          </div>
+        </li>
+        <li class="process-step">
+          <span class="step-num">05</span>
+          <div>
+            <div class="step-title">商品製作與出貨結案</div>
+            <div class="step-desc">統籌回饋商品製作、樣本確認、備貨與包裝，約一個月完成 1,200+ 筆回饋品出貨；支持者社群反應熱烈，形成正向口碑。</div>
+          </div>
+        </li>
+      </ol>
+    </div>
+
+    <!-- OUTCOME + SKILLS -->
+    <div class="section">
+      <div class="outcome-skills">
+        <div>
+          <div class="section-title">專案成果</div>
+          <ul class="outcome-list">
+            <li class="outcome-item">最終募資 NT$1,708,391，達原定目標 10 倍以上；上線 12 小時突破百萬</li>
+            <li class="outcome-item">約 1,200 位支持者，規劃並交付 8 種回饋品，約一個月完成出貨</li>
+            <li class="outcome-item">成功整合多方利害關係人，建立具代表性的音樂募資案例，獲媒體報導擴散</li>
+          </ul>
+        </div>
+        <div>
+          <div class="section-title">可轉移能力</div>
+          <div class="skill-stack">
+            <div class="skill-item">
+              <div class="skill-item-name">理念轉譯與提案能力</div>
+              <div class="skill-item-desc">將抽象創作理念轉化為支持者願意投入的提案，對應企業募款的溝通說服力</div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-item-name">利害關係人管理</div>
+              <div class="skill-item-desc">整合平台、廠牌、設計師、供應商與 1,200+ 支持者，維繫多方合作並推動專案前進</div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-item-name">全程執行與交付能力</div>
+              <div class="skill-item-desc">從企劃、商品開發到出貨結案，完整掌控多線進度並確保品質交付</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LINK -->
+    <div class="section" style="margin-bottom: 0;">
+      <div class="section-title">專案連結</div>
+      <a class="project-link"
+         href="https://wabay.tw/projects/ncknband2023?locale=zh-TW"
+         target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24">
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+          <polyline points="15 3 21 3 21 9"/>
+          <line x1="10" y1="14" x2="21" y2="3"/>
+        </svg>
+        查看原始募資頁面
+      </a>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="footer-right">
+      <a href="https://www.linkedin.com/in/kate-yeh-64955873/" target="_blank" rel="noopener">LinkedIn → Kate Yeh</a>
+    </div>
+  </footer>
+
+</body>
+</html>

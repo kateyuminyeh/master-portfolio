@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>王頌 · 視覺方向規劃 — Kate Yeh</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #FFFFFF;
+      --surface: #FFFFFF;
+      --text: #333333;
+      --text-2: #696969;
+      --accent: #db7666;
+      --deep: #3c242d;
+      --tag-bg: #F4F4F5;
+      --indigo: #585c75;
+      --indigo-light: #EEEDF3;
+      --border: #E8E8E8;
+      --max-w: 860px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Noto Sans TC', system-ui, sans-serif;
+      font-weight: 400;
+      line-height: 1.7;
+    }
+
+    nav {
+      padding: 22px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: var(--surface);
+      z-index: 10;
+    }
+    .back-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text-2);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--accent); }
+    .back-link svg {
+      width: 16px; height: 16px;
+      stroke: currentColor; fill: none;
+      stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+    }
+
+    .hero {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 52px 40px 0;
+    }
+    .hero-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .hero-title {
+      font-size: clamp(22px, 3.5vw, 32px);
+      font-weight: 300;
+      line-height: 1.35;
+      color: var(--deep);
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+    .hero-title strong { font-weight: 600; }
+    .hero-subtitle {
+      font-size: 14px;
+      color: var(--text-2);
+      line-height: 1.85;
+      max-width: 600px;
+      margin-bottom: 20px;
+    }
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+    .tag {
+      padding: 4px 12px;
+      background: var(--tag-bg);
+      border-radius: 4px;
+      font-size: 11px;
+      color: var(--text-2);
+      letter-spacing: 0.04em;
+    }
+    .hero-meta {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .meta-item { font-size: 12px; color: var(--text-2); }
+    .meta-item strong { color: var(--text); font-weight: 500; }
+
+    .hero-metrics {
+      max-width: var(--max-w);
+      margin: 32px auto 0;
+      padding: 0 40px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--border);
+    }
+    .hero-metric {
+      padding: 20px 0 20px 20px;
+      border-right: 1px solid var(--border);
+    }
+    .hero-metric:first-child { padding-left: 0; }
+    .hero-metric:last-child { border-right: none; }
+    .hm-value {
+      font-size: clamp(18px, 2vw, 22px);
+      font-weight: 600;
+      color: var(--deep);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 4px;
+    }
+    .hm-label { font-size: 11px; color: var(--text-2); letter-spacing: 0.03em; }
+
+    .content {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 52px 40px 88px;
+    }
+
+    .section { margin-bottom: 52px; }
+    .section-title {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+    .col-title {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .col-body { font-size: 13px; color: var(--text-2); line-height: 1.9; }
+    .col-body p + p { margin-top: 10px; }
+    .challenge-list {
+      list-style: none;
+      margin-top: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .challenge-item {
+      display: flex;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.7;
+      align-items: flex-start;
+    }
+    .challenge-item::before { content: '—'; color: var(--border); flex-shrink: 0; }
+
+    .role-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .role-card { background: var(--indigo-light); border-radius: 8px; padding: 20px; }
+    .role-card-num {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--indigo);
+      letter-spacing: 0.1em;
+      opacity: 0.6;
+      margin-bottom: 8px;
+    }
+    .role-card-title { font-size: 13px; font-weight: 600; color: var(--indigo); margin-bottom: 8px; line-height: 1.4; }
+    .role-card-desc { font-size: 12px; color: var(--text-2); line-height: 1.8; }
+
+    .step-image {
+      margin-top: 14px;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .step-image img { width: 100%; display: block; }
+    .step-image-caption {
+      font-size: 11px;
+      color: var(--text-2);
+      padding: 8px 12px;
+      background: var(--tag-bg);
+      letter-spacing: 0.02em;
+    }
+
+    .photo-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .photo-row img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      border-radius: 4px;
+      display: block;
+    }
+
+    .process-list { list-style: none; display: flex; flex-direction: column; }
+    .process-step {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 16px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .step-num { font-size: 11px; font-weight: 600; color: var(--accent); letter-spacing: 0.05em; padding-top: 2px; }
+    .step-title { font-size: 14px; font-weight: 600; color: var(--deep); margin-bottom: 6px; }
+    .step-desc { font-size: 13px; color: var(--text-2); line-height: 1.85; }
+
+    .outcome-skills { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+    .outcome-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .outcome-item {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.75;
+    }
+    .outcome-item::before {
+      content: '✓';
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 11px;
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+    .skill-stack { display: flex; flex-direction: column; gap: 10px; }
+    .skill-item { background: var(--tag-bg); border-radius: 7px; padding: 14px 16px; }
+    .skill-item-name { font-size: 12px; font-weight: 600; color: var(--deep); margin-bottom: 4px; }
+    .skill-item-desc { font-size: 12px; color: var(--text-2); line-height: 1.75; }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 40px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+    .footer-right a { font-size: 13px; color: var(--accent); text-decoration: none; }
+    .footer-right a:hover { text-decoration: underline; }
+
+    @media (max-width: 720px) {
+      nav { padding: 18px 20px; }
+      .hero-inner { padding: 36px 20px 0; }
+      .hero-metrics { padding: 0 20px; grid-template-columns: repeat(2, 1fr); }
+      .hero-metric { padding: 16px 0 16px 16px; }
+      .hero-metric:nth-child(2) { border-right: none; }
+      .content { padding: 36px 20px 64px; }
+      .two-col { grid-template-columns: 1fr; gap: 24px; }
+      .role-cards { grid-template-columns: 1fr; }
+      .outcome-skills { grid-template-columns: 1fr; gap: 32px; }
+      .photo-row { grid-template-columns: repeat(2, 1fr); }
+      footer { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="back-link" href="../index.html">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      返回作品集
+    </a>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-label">藝術視覺 · 形象企劃 · 拍攝籌備</div>
+      <h1 class="hero-title">
+        王頌<br><strong>視覺方向規劃與形象拍攝</strong>
+      </h1>
+      <p class="hero-subtitle">
+        從藝人的音樂氣質與個人特質出發，發展視覺定位語言，整理拍攝素材參考，主導形象拍攝方向，完成形象照與單曲視覺系列。
+      </p>
+      <div class="hero-tags">
+        <span class="tag">視覺企劃</span>
+        <span class="tag">形象規劃</span>
+        <span class="tag">拍攝籌備</span>
+        <span class="tag">音樂發行</span>
+      </div>
+      <div class="hero-meta">
+        <span class="meta-item">角色 &nbsp;<strong>視覺方向主導 · Moodboard 研究 · 拍攝準備</strong></span>
+        <span class="meta-item">客戶 &nbsp;<strong>獨立音樂人 王頌</strong></span>
+      </div>
+    </div>
+    <div class="hero-metrics">
+      <div class="hero-metric">
+        <div class="hm-value">12 個</div>
+        <div class="hm-label">視覺定位關鍵詞</div>
+      </div>
+      <div class="hero-metric">
+        <div class="hm-value">3 組</div>
+        <div class="hm-label">Moodboard 方向</div>
+      </div>
+      <div class="hero-metric">
+        <div class="hm-value">4 張</div>
+        <div class="hm-label">形象照完成</div>
+      </div>
+      <div class="hero-metric">
+        <div class="hm-value">2 款</div>
+        <div class="hm-label">視覺延伸應用</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <div class="two-col section">
+      <div>
+        <div class="col-title">專案背景</div>
+        <div class="col-body">
+          <p>王頌是台灣獨立音樂人，在新的創作階段需要建立更清晰、有主張的視覺識別，從過去較鬆散的呈現，轉向能夠延伸至形象照、單曲封面與社群應用的一致視覺語言。</p>
+          <p>本次合作從視覺定位發展出發，目標是讓藝人、攝影師與造型師在拍攝前達成共識，確保成品能精準傳達音樂氣質。</p>
+        </div>
+      </div>
+      <div>
+        <div class="col-title">核心挑戰</div>
+        <div class="col-body">
+          <p>視覺定位需要有足夠的精確度，讓執行端（攝影師、造型師）可以理解並落地，同時保有藝術彈性。</p>
+          <ul class="challenge-list">
+            <li class="challenge-item">藝人有強烈的個人審美感，但難以言說，需透過 reference 研究完成對齊</li>
+            <li class="challenge-item">視覺語言需同時服務形象照、單曲封面與社群素材，延展性要高</li>
+            <li class="challenge-item">拍攝前的素材準備需足夠具體，讓攝影師可以直接執行，減少當天溝通成本</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">我的角色</div>
+      <div class="role-cards">
+        <div class="role-card">
+          <div class="role-card-num">01</div>
+          <div class="role-card-title">視覺定位研究</div>
+          <div class="role-card-desc">梳理藝人的音樂氣質、個人特質與目標形象，發展 12 個視覺定位關鍵詞，建立可被共同理解的視覺語言框架。</div>
+        </div>
+        <div class="role-card">
+          <div class="role-card-num">02</div>
+          <div class="role-card-title">Moodboard 素材整理</div>
+          <div class="role-card-desc">大量蒐集視覺 reference，組織為三組方向性 moodboard，與藝人多輪確認，確保方向共識再進入拍攝籌備。</div>
+        </div>
+        <div class="role-card">
+          <div class="role-card-num">03</div>
+          <div class="role-card-title">拍攝方向準備</div>
+          <div class="role-card-desc">整理拍攝方向文件，涵蓋燈光質感、服裝色調、場景氛圍與姿態參考，讓攝影師與造型師在拍攝當天有明確依循。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">執行過程</div>
+      <ol class="process-list">
+        <li class="process-step">
+          <span class="step-num">01</span>
+          <div>
+            <div class="step-title">深入訪談與音樂聆聽</div>
+            <div class="step-desc">聆聽王頌的音樂作品，並透過訪談了解創作脈絡、目標聽眾與個人審美偏好，找到視覺語言的著力點與邊界。</div>
+          </div>
+        </li>
+        <li class="process-step">
+          <span class="step-num">02</span>
+          <div>
+            <div class="step-title">視覺定位關鍵詞發展</div>
+            <div class="step-desc">將訪談結果轉化為 12 個精準的視覺定位關鍵詞，形成可被量化、可被討論的視覺語言基礎，作為後續所有視覺決策的參照依據。</div>
+          </div>
+        </li>
+        <li class="process-step">
+          <span class="step-num">03</span>
+          <div>
+            <div class="step-title">Moodboard 研究與多輪對齊</div>
+            <div class="step-desc">蒐集大量 reference，整理為三組不同方向性的 moodboard，與藝人多輪討論確認，直到雙方對視覺方向達成清楚共識。</div>
+            <div class="step-image">
+              <img src="../assets/images/ref_portrait.png" alt="Portrait moodboard reference">
+              <div class="step-image-caption">Portrait 方向：人像燈光、質感與姿態參考素材整理</div>
+            </div>
+            <div class="step-image" style="margin-top: 10px;">
+              <img src="../assets/images/ref_editorial.png" alt="Editorial moodboard reference">
+              <div class="step-image-caption">Editorial 方向：空間感、構圖與反差對比參考素材</div>
+            </div>
+          </div>
+        </li>
+        <li class="process-step">
+          <span class="step-num">04</span>
+          <div>
+            <div class="step-title">拍攝方向文件整理與拍攝</div>
+            <div class="step-desc">將確認後的視覺方向轉化為可執行的拍攝準備文件，涵蓋燈光、服裝、場景、姿態與構圖方向，確保拍攝當天能有效執行，減少即興決策。</div>
+          </div>
+        </li>
+        <li class="process-step">
+          <span class="step-num">05</span>
+          <div>
+            <div class="step-title">成品輸出與視覺延伸</div>
+            <div class="step-desc">完成 4 張黑白形象照，建立清晰的藝人視覺識別，後續成功延伸應用至單曲封面視覺，確保形象一致性。</div>
+            <div class="photo-row" style="margin-top: 14px;">
+              <img src="../assets/images/songwang_01.jpg" alt="王頌形象照 1">
+              <img src="../assets/images/songwang_02.jpg" alt="王頌形象照 2">
+              <img src="../assets/images/songwang_03.jpg" alt="王頌形象照 3">
+              <img src="../assets/images/songwang_04.jpg" alt="王頌形象照 4">
+            </div>
+          </div>
+        </li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <div class="outcome-skills">
+        <div>
+          <div class="section-title">專案成果</div>
+          <ul class="outcome-list">
+            <li class="outcome-item">完成 4 張黑白形象照，建立清晰且具延展性的藝人視覺語言</li>
+            <li class="outcome-item">視覺定位成功延伸至單曲封面，形象一致性高</li>
+            <li class="outcome-item">藝人、攝影師與造型師在拍攝前達成清楚共識，現場執行順暢</li>
+          </ul>
+        </div>
+        <div>
+          <div class="section-title">可轉移能力</div>
+          <div class="skill-stack">
+            <div class="skill-item">
+              <div class="skill-item-name">抽象轉具象的轉譯能力</div>
+              <div class="skill-item-desc">將難以言說的美學偏好轉化為可被執行的視覺語言，對應任何需要將概念落地的企劃角色</div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-item-name">多方溝通與共識建立</div>
+              <div class="skill-item-desc">整合藝人、攝影師、造型師的不同視角，在創作現場達成有效共識</div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-item-name">系統化研究與素材整理</div>
+              <div class="skill-item-desc">大量資訊蒐集、整理與篩選，快速建立可操作的參考框架</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="footer-right">
+      <a href="https://www.linkedin.com/in/kate-yeh-64955873/" target="_blank" rel="noopener">LinkedIn → Kate Yeh</a>
+    </div>
+  </footer>
+
+</body>
+</html>

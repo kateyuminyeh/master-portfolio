@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>輕輕背 Plus 護脊書包集資專案 · Kate</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #FFFFFF;
+      --surface: #FFFFFF;
+      --text: #333333;
+      --text-2: #696969;
+      --accent: #db7666;
+      --accent-light: #FDEEED;
+      --deep: #3c242d;
+      --tag-bg: #F4F4F5;
+      --indigo: #585c75;
+      --indigo-light: #EEEDF3;
+      --border: #E8E8E8;
+      --max-w: 860px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Noto Sans TC', system-ui, sans-serif;
+      font-weight: 400;
+      line-height: 1.7;
+    }
+
+    /* NAV */
+    nav {
+      padding: 22px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: var(--surface);
+      z-index: 10;
+    }
+    .back-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text-2);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--accent); }
+    .back-link svg {
+      width: 16px; height: 16px;
+      stroke: currentColor; fill: none;
+      stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+    }
+    .nav-name { font-size: 14px; color: var(--text-2); letter-spacing: 0.03em; }
+
+    /* HERO */
+    .hero {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 52px 40px 0;
+    }
+    .hero-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .hero-title {
+      font-size: clamp(22px, 3.5vw, 32px);
+      font-weight: 300;
+      line-height: 1.35;
+      color: var(--deep);
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+    .hero-title strong { font-weight: 600; }
+    .hero-subtitle {
+      font-size: 14px;
+      color: var(--text-2);
+      line-height: 1.85;
+      max-width: 600px;
+      margin-bottom: 20px;
+    }
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+    .tag {
+      padding: 4px 12px;
+      background: var(--tag-bg);
+      border-radius: 4px;
+      font-size: 11px;
+      color: var(--text-2);
+      letter-spacing: 0.04em;
+    }
+    .hero-meta {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .meta-item {
+      font-size: 12px;
+      color: var(--text-2);
+    }
+    .meta-item strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    /* HERO METRICS */
+    .hero-metrics {
+      max-width: var(--max-w);
+      margin: 32px auto 0;
+      padding: 0 40px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--border);
+    }
+    .hero-metric {
+      padding: 20px 0 20px 20px;
+      border-right: 1px solid var(--border);
+    }
+    .hero-metric:first-child { padding-left: 0; }
+    .hero-metric:last-child { border-right: none; }
+    .hm-value {
+      font-size: clamp(18px, 2vw, 22px);
+      font-weight: 600;
+      color: var(--deep);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 4px;
+    }
+    .hm-label {
+      font-size: 11px;
+      color: var(--text-2);
+      letter-spacing: 0.03em;
+    }
+
+    /* CONTENT */
+    .content {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 52px 40px 88px;
+    }
+
+    /* SECTION */
+    .section { margin-bottom: 52px; }
+    .section-title {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 18px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* TWO COL */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+    .col-title {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .col-body {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.9;
+    }
+    .col-body p + p { margin-top: 10px; }
+    .challenge-list {
+      list-style: none;
+      margin-top: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .challenge-item {
+      display: flex;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.7;
+      align-items: flex-start;
+    }
+    .challenge-item::before {
+      content: '—';
+      color: var(--border);
+      flex-shrink: 0;
+    }
+
+    /* ROLE CARDS */
+    .role-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .role-card {
+      background: var(--indigo-light);
+      border-radius: 8px;
+      padding: 20px;
+    }
+    .role-card-num {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--indigo);
+      letter-spacing: 0.1em;
+      opacity: 0.6;
+      margin-bottom: 8px;
+    }
+    .role-card-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--indigo);
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+    .role-card-desc {
+      font-size: 12px;
+      color: var(--text-2);
+      line-height: 1.8;
+    }
+
+    /* PROCESS */
+    .process-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+    }
+    .process-step {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 16px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .step-num {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+      padding-top: 2px;
+    }
+    .step-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--deep);
+      margin-bottom: 6px;
+    }
+    .step-desc {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.85;
+    }
+
+    /* OUTCOME + SKILLS */
+    .outcome-skills {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+    .outcome-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .outcome-item {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.75;
+    }
+    .outcome-item::before {
+      content: '✓';
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 11px;
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+    .skill-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .skill-item {
+      background: var(--tag-bg);
+      border-radius: 7px;
+      padding: 14px 16px;
+    }
+    .skill-item-name {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--deep);
+      margin-bottom: 4px;
+    }
+    .skill-item-desc {
+      font-size: 12px;
+      color: var(--text-2);
+      line-height: 1.75;
+    }
+
+    /* PROJECT LINK */
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 22px;
+      border: 1.5px solid var(--border);
+      border-radius: 7px;
+      font-size: 13px;
+      color: var(--text-2);
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .project-link:hover { border-color: var(--accent); color: var(--accent); }
+    .project-link svg {
+      width: 13px; height: 13px;
+      stroke: currentColor; fill: none;
+      stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-left { font-size: 13px; color: var(--text-2); }
+    .footer-right a { font-size: 13px; color: var(--accent); text-decoration: none; }
+    .footer-right a:hover { text-decoration: underline; }
+
+    /* RESPONSIVE */
+    @media (max-width: 720px) {
+      nav { padding: 18px 20px; }
+      .hero-inner { padding: 36px 20px 0; }
+      .hero-metrics { padding: 0 20px; grid-template-columns: repeat(2, 1fr); }
+      .hero-metric { padding: 16px 0 16px 16px; }
+      .hero-metric:nth-child(2) { border-right: none; }
+      .content { padding: 36px 20px 64px; }
+      .two-col { grid-template-columns: 1fr; gap: 24px; }
+      .role-cards { grid-template-columns: 1fr; }
+      .outcome-skills { grid-template-columns: 1fr; gap: 32px; }
+      footer { flex-direction: column; gap: 8px; text-align: center; padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="back-link" href="../index.html">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      返回作品集
+    </a>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-label">消費品集資 · 專案管理 · 客戶關係</div>
+      <h1 class="hero-title">
+        輕輕背 Plus<br><strong>護脊書包集資專案</strong>
+      </h1>
+      <p class="hero-subtitle">
+        在低信任、高複雜度的合作情境中，透過資訊補足、規格收斂與跨部門推進，協助專案順利上線並達成募資目標。
+      </p>
+      <div class="hero-tags">
+        <span class="tag">消費品集資</span>
+        <span class="tag">客戶關係管理</span>
+        <span class="tag">專案管理</span>
+        <span class="tag">產品規格收斂</span>
+        <span class="tag">跨部門協作</span>
+      </div>
+      <div class="hero-meta">
+        <span class="meta-item">角色 &nbsp;<strong>客戶主要窗口 · 規格整理 · 跨部門推進</strong></span>
+        <span class="meta-item">期間 &nbsp;<strong>2024 年 7 月至 8 月</strong></span>
+      </div>
+    </div>
+    <div class="hero-metrics">
+      <div class="hero-metric">
+        <div class="hm-value">NT$2,030,279</div>
+        <div class="hm-label">累計募資金額</div>
+      </div>
+      <div class="hero-metric">
+        <div class="hm-value">4,060%</div>
+        <div class="hm-label">募資達標率</div>
+      </div>
+      <div class="hero-metric">
+        <div class="hm-value">548</div>
+        <div class="hm-label">贊助人數</div>
+      </div>
+      <div class="hero-metric">
+        <div class="hm-value">15+</div>
+        <div class="hm-label">規格組合釐清</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- BACKGROUND + CHALLENGE -->
+    <div class="two-col section">
+      <div>
+        <div class="col-title">專案背景</div>
+        <div class="col-body">
+          <p>「輕輕背 Plus 護脊書包」是 Super Double 的第二代集資產品，我加入爆器顧問後接手此案，需在既有客戶關係上重新建立合作節奏。</p>
+          <p>客戶與新窗口尚未建立信任，且部分產品素材由客戶自行主導，導致資訊同步不穩定，內部團隊較難完整掌握產品細節與進度。</p>
+        </div>
+      </div>
+      <div>
+        <div class="col-title">核心挑戰</div>
+        <div class="col-body">
+          <p>在信任基礎不足、資訊更新不完整且時程緊湊的情況下，協助客戶與內部團隊重新對齊並推動專案順利上線。</p>
+          <ul class="challenge-list">
+            <li class="challenge-item">新接手客戶，需短時間內重建合作信任與工作節奏</li>
+            <li class="challenge-item">產品規格超過 15 種組合，若全部呈現易增加決策成本</li>
+            <li class="challenge-item">前期溝通成本高，時程受壓，需同步協調多方進度</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ROLE CARDS -->
+    <div class="section">
+      <div class="section-title">我的角色</div>
+      <div class="role-cards">
+        <div class="role-card">
+          <div class="role-card-num">01</div>
+          <div class="role-card-title">合作關係接手與信任建立</div>
+          <div class="role-card-desc">接手既有客戶，到拍攝現場補足資訊，以穩定窗口與書面紀錄逐步建立合作信任。</div>
+        </div>
+        <div class="role-card">
+          <div class="role-card-num">02</div>
+          <div class="role-card-title">規格整理與決策優化</div>
+          <div class="role-card-desc">整理 15+ 種規格組合，協助收斂方案架構，降低消費者理解與選擇門檻。</div>
+        </div>
+        <div class="role-card">
+          <div class="role-card-num">03</div>
+          <div class="role-card-title">跨部門協調與上線推進</div>
+          <div class="role-card-desc">協調客戶、創意、設計、廣告各方，在時程壓縮下完成頁面製作與正式上線流程。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROCESS -->
+    <div class="section">
+      <div class="section-title">執行過程</div>
+      <ol class="process-list">
+        <li class="process-step">
+          <span class="step-num">01</span>
+          <div>
+            <div class="step-title">接手低信任合作關係</div>
+            <div class="step-desc">到拍攝現場了解產品特色，補足資訊落差，並透過文字紀錄整理待確認事項，建立可追蹤的溝通基礎。</div>
+          </div>
+        </li>
+        <li class="process-step">
+          <span class="step-num">02</span>
+          <div>
+            <div class="step-title">書面紀錄穩定溝通風險</div>
+            <div class="step-desc">面對回覆不完整的狀況，在群組中以清楚、具體的方式提出問題，讓決策點與執行風險留下文字依據，降低資訊落差被放大成執行問題的風險。</div>
+          </div>
+        </li>
+        <li class="process-step">
+          <span class="step-num">03</span>
+          <div>
+            <div class="step-title">釐清複雜規格與選擇路徑</div>
+            <div class="step-desc">協助客戶與內部團隊反覆釐清 15+ 種規格組合，判斷哪些需要保留、哪些可以簡化，讓募資頁面與方案設計更聚焦、更容易被消費者理解。</div>
+          </div>
+        </li>
+        <li class="process-step">
+          <span class="step-num">04</span>
+          <div>
+            <div class="step-title">緊湊時程中推動上線</div>
+            <div class="step-desc">在前期溝通成本高、時程受壓的情況下，持續追蹤各方進度並協助排除卡點，最終協助專案於 2024/07/12 順利上線，2024/08/20 募資成功結束。</div>
+          </div>
+        </li>
+      </ol>
+    </div>
+
+    <!-- OUTCOME + SKILLS -->
+    <div class="section">
+      <div class="outcome-skills">
+        <div>
+          <div class="section-title">專案成果</div>
+          <ul class="outcome-list">
+            <li class="outcome-item">累計募資 NT$2,030,279，達標率 4,060%，共 548 位贊助者</li>
+            <li class="outcome-item">協助釐清 15+ 種產品規格組合，降低消費者理解門檻並確保方案可執行</li>
+            <li class="outcome-item">在合作信任不足、資訊同步不穩的困難開局下，推動專案從上線到成功結案</li>
+          </ul>
+        </div>
+        <div>
+          <div class="section-title">可轉移能力</div>
+          <div class="skill-stack">
+            <div class="skill-item">
+              <div class="skill-item-name">困難關係中的信任建立</div>
+              <div class="skill-item-desc">以穩定窗口、清楚紀錄與持續推進維繫合作，對應與企業客戶建立信任的能力</div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-item-name">複雜資訊整理與方案收斂</div>
+              <div class="skill-item-desc">將複雜需求與限制整理成可執行方案，對應企業合作中的提案與決策支援能力</div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-item-name">高壓時程下的跨部門協作</div>
+              <div class="skill-item-desc">在多方不同步的情況下仍完成目標，對應多專案管理與時程控管能力</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LINK -->
+    <div class="section" style="margin-bottom: 0;">
+      <div class="section-title">專案連結</div>
+      <a class="project-link"
+         href="https://www.zeczec.com/projects/SuperDoublePlus-2024-08-21"
+         target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24">
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+          <polyline points="15 3 21 3 21 9"/>
+          <line x1="10" y1="14" x2="21" y2="3"/>
+        </svg>
+        查看原始募資頁面
+      </a>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="footer-right">
+      <a href="https://www.linkedin.com/in/kate-yeh-64955873/" target="_blank" rel="noopener">LinkedIn → Kate Yeh</a>
+    </div>
+  </footer>
+
+</body>
+</html>

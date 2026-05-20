@@ -1,0 +1,52 @@
+[
+  {
+    "id": "heishi",
+    "title": "黑市音樂 — 營運系統建構",
+    "subtitle": "系統設計 · 跨角色需求整合",
+    "cover": "assets/images/heishi-cover.png",
+    "url": "projects/heishi.html",
+    "tags": ["系統設計", "流程優化", "音樂產業"],
+    "metric": { "value": "3 → 1", "label": "重工層數壓縮" },
+    "type": "系統 / 流程"
+  },
+  {
+    "id": "hujiao",
+    "title": "呼叫音樂節 — 演出行政統籌",
+    "subtitle": "大型活動行政 · 資料架構",
+    "cover": "assets/images/hujiao-cover.png",
+    "url": "projects/hujiao.html",
+    "tags": ["活動行政", "多方協調", "音樂產業"],
+    "metric": { "value": "15+", "label": "演出組別協調" },
+    "type": "活動 / 行政"
+  },
+  {
+    "id": "superdouble",
+    "title": "輕輕背 Plus — 客戶合作重建",
+    "subtitle": "低信任客戶關係 · 規格收斂",
+    "cover": "assets/images/superdouble-cover.png",
+    "url": "projects/superdouble.html",
+    "tags": ["客戶關係", "專案管理", "群眾募資"],
+    "metric": { "value": "NT$2,030,279", "label": "最終募資金額" },
+    "type": "募資 / 客戶關係"
+  },
+  {
+    "id": "neciken",
+    "title": "南西肯恩 — 專輯募資案",
+    "subtitle": "群眾募資 · 利害關係人管理",
+    "cover": "assets/images/neciken_01.jpg",
+    "url": "projects/neciken.html",
+    "tags": ["群眾募資", "專案管理", "音樂產業"],
+    "metric": { "value": "NT$1,708,391", "label": "最終募資金額" },
+    "type": "募資 / 專案管理"
+  },
+  {
+    "id": "songwang",
+    "title": "王頌 — 視覺方向規劃",
+    "subtitle": "藝術視覺 · 形象企劃 · 拍攝籌備",
+    "cover": "assets/images/songwang_03.jpg",
+    "url": "projects/songwang.html",
+    "tags": ["視覺企劃", "創意方向", "音樂產業"],
+    "metric": { "value": "4 張", "label": "形象照完成" },
+    "type": "視覺 / 企劃"
+  }
+]
