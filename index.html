@@ -52,35 +52,6 @@
       color: var(--ink);
     }
 
-    .lang-toggle {
-      display: flex;
-      align-items: center;
-      gap: 2px;
-      border: 1px solid var(--rule);
-      border-radius: 4px;
-      overflow: hidden;
-    }
-
-    .lang-btn {
-      padding: 5px 12px;
-      font-size: 0.72rem;
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      cursor: pointer;
-      border: none;
-      background: transparent;
-      color: var(--light);
-      transition: background 0.15s, color 0.15s;
-      font-family: inherit;
-    }
-
-    .lang-btn.active {
-      background: var(--ink);
-      color: var(--white);
-    }
-
-    .lang-btn:not(.active):hover { color: var(--mid); }
-
     /* ── Hero ── */
     .hero {
       max-width: var(--max-w);
@@ -251,28 +222,6 @@
       color: var(--light);
     }
 
-    /* ── Toast ── */
-    .toast {
-      position: fixed;
-      bottom: 32px;
-      left: 50%;
-      transform: translateX(-50%) translateY(12px);
-      background: var(--ink);
-      color: var(--white);
-      padding: 10px 20px;
-      border-radius: 4px;
-      font-size: 0.8rem;
-      opacity: 0;
-      transition: opacity 0.2s, transform 0.2s;
-      pointer-events: none;
-      white-space: nowrap;
-    }
-
-    .toast.show {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-    }
-
     /* ── Footer ── */
     footer {
       border-top: 1px solid var(--rule);
@@ -318,16 +267,12 @@
 
   <nav>
     <span class="nav-name">Kate Yeh · 葉渝旻</span>
-    <div class="lang-toggle">
-      <button class="lang-btn active" id="btn-zh" onclick="setLang('zh')">中文</button>
-      <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
-    </div>
   </nav>
 
   <div class="hero">
     <div class="hero-label">Selected Work</div>
     <h1>葉渝旻 Kate Yeh<br><strong>專案作品集</strong></h1>
-    <p class="hero-desc">具備系統設計、活動行政、群眾募資與視覺企劃等跨領域執行經驗，長期深耕音樂產業，曾任職黑市音樂、爆器、I Mean Us。</p>
+    <p class="hero-desc">具備跨領域專案管理、營運流程建置、群眾募資執行與大型活動行政統籌經驗。長期在音樂產業、新創平台與消費品專案中，負責多方協作、資訊整合、時程推進與流程優化，擅長在目標模糊、角色交錯與資源有限的情境下，將複雜專案整理為可執行的工作流程與協作系統。</p>
   </div>
 
   <div class="filter-wrap">
@@ -337,6 +282,7 @@
       <button class="filter-btn" data-tag="活動行政">活動行政</button>
       <button class="filter-btn" data-tag="群眾募資">群眾募資</button>
       <button class="filter-btn" data-tag="視覺企劃">視覺企劃</button>
+      <button class="filter-btn" data-tag="趨勢研究">趨勢研究</button>
       <button class="filter-btn" data-tag="音樂產業">音樂產業</button>
     </div>
   </div>
@@ -351,8 +297,6 @@
       <a href="https://www.linkedin.com/in/kate-yeh-64955873/" target="_blank" rel="noopener">LinkedIn</a>
     </div>
   </footer>
-
-  <div class="toast" id="toast">英文版籌備中，敬請期待</div>
 
   <script>
     const PROJECTS = [
@@ -373,7 +317,7 @@
         "cover": "assets/images/hujiao-cover.png",
         "url": "projects/hujiao.html",
         "tags": ["活動行政", "多方協調", "音樂產業"],
-        "metric": { "value": "15+", "label": "演出組別協調" },
+        "metric": { "value": "40 組", "label": "演出藝人整合" },
         "type": "活動 / 行政"
       },
       {
@@ -399,12 +343,22 @@
       {
         "id": "songwang",
         "title": "王頌 — 視覺方向規劃",
-        "subtitle": "藝術視覺 · 形象企劃 · 拍攝籌備",
+        "subtitle": "視覺定位提案 · Moodboard 建立 · 創意對齊統籌",
         "cover": "assets/images/songwang_03.jpg",
         "url": "projects/songwang.html",
         "tags": ["視覺企劃", "創意方向", "音樂產業"],
-        "metric": { "value": "4 張", "label": "形象照完成" },
-        "type": "視覺 / 企劃"
+        "metric": { "value": "4 組", "label": "藝人視覺方向統籌" },
+        "type": "視覺 / 創意方向"
+      },
+      {
+        "id": "piccollage",
+        "title": "PicCollage — 視覺趨勢情蒐系統",
+        "subtitle": "半自動情報管道 · 4 大趨勢群組 · 內容策展優先矩陣",
+        "cover": "assets/images/piccollage-trend.jpeg",
+        "url": "https://kateyuminyeh.github.io/piccollage-trend-intelligence/",
+        "tags": ["趨勢研究", "視覺策展", "內容策略"],
+        "metric": { "value": "4 大群組", "label": "12 個視覺趨勢信號分析" },
+        "type": "趨勢 / 內容策展"
       }
     ];
 
@@ -427,6 +381,7 @@
         const card = document.createElement('a');
         card.className = 'card';
         card.href = p.url;
+        if (p.url.startsWith('http')) { card.target = '_blank'; card.rel = 'noopener'; }
         card.innerHTML = `
           <div class="card-thumb">
             <img src="${p.cover}" alt="${p.title}" loading="lazy">
@@ -453,22 +408,6 @@
       activeTag = btn.dataset.tag;
       render();
     });
-
-    function setLang(lang) {
-      if (lang === 'zh') {
-        document.getElementById('btn-zh').classList.add('active');
-        document.getElementById('btn-en').classList.remove('active');
-      } else {
-        showToast('英文版籌備中，敬請期待');
-      }
-    }
-
-    function showToast(msg) {
-      const t = document.getElementById('toast');
-      t.textContent = msg;
-      t.classList.add('show');
-      setTimeout(() => t.classList.remove('show'), 2200);
-    }
 
     init();
   </script>

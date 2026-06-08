@@ -1,478 +1,605 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>王頌 · 視覺方向規劃 — Kate Yeh</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>王頌 · 視覺方向統籌 — Kate Yeh</title>
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --bg: #FFFFFF;
-      --surface: #FFFFFF;
-      --text: #333333;
-      --text-2: #696969;
-      --accent: #db7666;
-      --deep: #3c242d;
-      --tag-bg: #F4F4F5;
-      --indigo: #585c75;
-      --indigo-light: #EEEDF3;
-      --border: #E8E8E8;
-      --max-w: 860px;
+      --bg: #f9f8f6;
+      --white: #ffffff;
+      --ink: #141414;
+      --mid: #555555;
+      --light: #999999;
+      --rule: #e2dfd9;
+      --max: 960px;
     }
 
     body {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       background: var(--bg);
-      color: var(--text);
-      font-family: 'Noto Sans TC', system-ui, sans-serif;
-      font-weight: 400;
-      line-height: 1.7;
+      color: var(--ink);
+      line-height: 1.6;
     }
 
+    /* ── Nav ── */
     nav {
-      padding: 22px 40px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid var(--border);
-      position: sticky;
-      top: 0;
-      background: var(--surface);
-      z-index: 10;
-    }
-    .back-link {
+      padding: 28px 48px;
       display: flex;
       align-items: center;
       gap: 8px;
-      font-size: 13px;
-      color: var(--text-2);
+    }
+
+    nav a {
+      font-size: 0.8rem;
+      letter-spacing: 0.06em;
       text-decoration: none;
+      color: var(--light);
       transition: color 0.2s;
     }
-    .back-link:hover { color: var(--accent); }
-    .back-link svg {
-      width: 16px; height: 16px;
-      stroke: currentColor; fill: none;
-      stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+
+    nav a:hover { color: var(--ink); }
+    nav .sep { color: var(--rule); font-size: 0.8rem; }
+    nav .current { color: var(--ink); font-size: 0.8rem; }
+
+    /* ── Section wrapper ── */
+    section {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 72px 48px;
+      border-bottom: 1px solid var(--rule);
     }
 
-    .hero {
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-    }
-    .hero-inner {
-      max-width: var(--max-w);
-      margin: 0 auto;
-      padding: 52px 40px 0;
-    }
-    .hero-label {
-      font-size: 11px;
-      font-weight: 500;
+    section:last-of-type { border-bottom: none; }
+
+    .section-label {
+      font-size: 0.68rem;
       letter-spacing: 0.16em;
-      color: var(--accent);
       text-transform: uppercase;
-      margin-bottom: 14px;
+      color: var(--light);
+      margin-bottom: 40px;
     }
-    .hero-title {
-      font-size: clamp(22px, 3.5vw, 32px);
-      font-weight: 300;
-      line-height: 1.35;
-      color: var(--deep);
-      margin-bottom: 12px;
+
+    /* ── Case header ── */
+    .case-title {
+      font-size: clamp(1.3rem, 2.5vw, 1.9rem);
+      font-weight: 500;
+      line-height: 1.25;
       letter-spacing: -0.01em;
+      margin-bottom: 32px;
     }
-    .hero-title strong { font-weight: 600; }
-    .hero-subtitle {
-      font-size: 14px;
-      color: var(--text-2);
-      line-height: 1.85;
-      max-width: 600px;
-      margin-bottom: 20px;
-    }
-    .hero-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 16px;
-    }
-    .tag {
-      padding: 4px 12px;
-      background: var(--tag-bg);
-      border-radius: 4px;
-      font-size: 11px;
-      color: var(--text-2);
-      letter-spacing: 0.04em;
-    }
-    .hero-meta {
-      display: flex;
-      gap: 24px;
-      flex-wrap: wrap;
-    }
-    .meta-item { font-size: 12px; color: var(--text-2); }
-    .meta-item strong { color: var(--text); font-weight: 500; }
 
-    .hero-metrics {
-      max-width: var(--max-w);
-      margin: 32px auto 0;
-      padding: 0 40px;
+    .case-meta-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      border-top: 1px solid var(--border);
-    }
-    .hero-metric {
-      padding: 20px 0 20px 20px;
-      border-right: 1px solid var(--border);
-    }
-    .hero-metric:first-child { padding-left: 0; }
-    .hero-metric:last-child { border-right: none; }
-    .hm-value {
-      font-size: clamp(18px, 2vw, 22px);
-      font-weight: 600;
-      color: var(--deep);
-      letter-spacing: -0.02em;
-      line-height: 1.1;
-      margin-bottom: 4px;
-    }
-    .hm-label { font-size: 11px; color: var(--text-2); letter-spacing: 0.03em; }
-
-    .content {
-      max-width: var(--max-w);
-      margin: 0 auto;
-      padding: 52px 40px 88px;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 64px;
     }
 
-    .section { margin-bottom: 52px; }
-    .section-title {
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.16em;
+    .meta-block h3 {
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 18px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
-    .col-title {
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 14px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid var(--border);
-    }
-    .col-body { font-size: 13px; color: var(--text-2); line-height: 1.9; }
-    .col-body p + p { margin-top: 10px; }
-    .challenge-list {
-      list-style: none;
-      margin-top: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .challenge-item {
-      display: flex;
-      gap: 10px;
-      font-size: 13px;
-      color: var(--text-2);
-      line-height: 1.7;
-      align-items: flex-start;
-    }
-    .challenge-item::before { content: '—'; color: var(--border); flex-shrink: 0; }
-
-    .role-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-    .role-card { background: var(--indigo-light); border-radius: 8px; padding: 20px; }
-    .role-card-num {
-      font-size: 10px;
-      font-weight: 600;
-      color: var(--indigo);
-      letter-spacing: 0.1em;
-      opacity: 0.6;
+      color: var(--light);
       margin-bottom: 8px;
     }
-    .role-card-title { font-size: 13px; font-weight: 600; color: var(--indigo); margin-bottom: 8px; line-height: 1.4; }
-    .role-card-desc { font-size: 12px; color: var(--text-2); line-height: 1.8; }
 
-    .step-image {
-      margin-top: 14px;
-      border-radius: 6px;
-      overflow: hidden;
-      border: 1px solid var(--border);
-    }
-    .step-image img { width: 100%; display: block; }
-    .step-image-caption {
-      font-size: 11px;
-      color: var(--text-2);
-      padding: 8px 12px;
-      background: var(--tag-bg);
-      letter-spacing: 0.02em;
+    .meta-block p,
+    .meta-block ul {
+      font-size: 0.88rem;
+      color: var(--mid);
+      line-height: 1.7;
     }
 
-    .photo-row {
+    .meta-block ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .meta-block ul li::before {
+      content: "—";
+      margin-right: 8px;
+      color: var(--rule);
+    }
+
+    /* ── Positioning strip ── */
+    .positioning {
+      background: var(--ink);
+      color: #fff;
+      padding: 40px 48px;
+      margin-bottom: 64px;
+      border-radius: 2px;
+    }
+
+    .positioning .pos-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 20px;
+    }
+
+    .positioning .pos-title {
+      font-size: clamp(1.1rem, 2vw, 1.5rem);
+      font-weight: 400;
+      line-height: 1.4;
+      margin-bottom: 10px;
+    }
+
+    .positioning .pos-sub {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.6;
+    }
+
+    /* ── Direction cards ── */
+    .direction-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      margin-top: 14px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-bottom: 64px;
     }
-    .photo-row img {
-      width: 100%;
+
+    .dir-card {
+      background: var(--white);
+      padding: 28px 24px;
+    }
+
+    .dir-card h4 {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--light);
+      margin-bottom: 10px;
+    }
+
+    .dir-card p {
+      font-size: 0.87rem;
+      color: var(--mid);
+      line-height: 1.7;
+    }
+
+    /* ── Image grid ── */
+    .image-section h3 {
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--light);
+      margin-bottom: 20px;
+    }
+
+    .img-grid {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 40px;
+    }
+
+    .img-grid.col-3 { grid-template-columns: repeat(3, 1fr); }
+    .img-grid.col-4 { grid-template-columns: repeat(4, 1fr); }
+    .img-grid.col-2 { grid-template-columns: repeat(2, 1fr); }
+
+    .img-slot {
       aspect-ratio: 3/4;
+      background: #e8e5e0;
+      overflow: hidden;
+      border-radius: 2px;
+    }
+
+    .img-slot img {
+      width: 100%;
+      height: 100%;
       object-fit: cover;
-      border-radius: 4px;
       display: block;
     }
 
-    .process-list { list-style: none; display: flex; flex-direction: column; }
-    .process-step {
+    .img-wrapper { display: flex; flex-direction: column; }
+
+    .img-caption {
+      font-size: 0.75rem;
+      color: var(--light);
+      margin-top: 6px;
+      line-height: 1.5;
+    }
+
+    /* ── Hashtag block ── */
+    .hashtag-block {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+
+    .hashtag {
+      font-size: 0.76rem;
+      color: var(--mid);
+      background: var(--bg);
+      border: 1px solid var(--rule);
+      border-radius: 2px;
+      padding: 4px 10px;
+      letter-spacing: 0.03em;
+    }
+
+    /* ── Contribution list ── */
+    .contribution {
+      margin-top: 56px;
+    }
+
+    .contribution h3 {
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--light);
+      margin-bottom: 20px;
+    }
+
+    .contribution ul {
+      list-style: none;
       display: grid;
-      grid-template-columns: 28px 1fr;
-      gap: 16px;
-      padding: 20px 0;
-      border-bottom: 1px solid var(--border);
+      grid-template-columns: 1fr 1fr;
+      gap: 10px 40px;
     }
-    .step-num { font-size: 11px; font-weight: 600; color: var(--accent); letter-spacing: 0.05em; padding-top: 2px; }
-    .step-title { font-size: 14px; font-weight: 600; color: var(--deep); margin-bottom: 6px; }
-    .step-desc { font-size: 13px; color: var(--text-2); line-height: 1.85; }
 
-    .outcome-skills { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
-    .outcome-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-    .outcome-item {
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-      font-size: 13px;
-      color: var(--text-2);
-      line-height: 1.75;
+    .contribution ul li {
+      font-size: 0.88rem;
+      color: var(--mid);
+      padding-left: 16px;
+      position: relative;
+      line-height: 1.6;
     }
-    .outcome-item::before {
-      content: '✓';
-      color: var(--accent);
-      font-weight: 600;
-      font-size: 11px;
-      flex-shrink: 0;
-      margin-top: 3px;
-    }
-    .skill-stack { display: flex; flex-direction: column; gap: 10px; }
-    .skill-item { background: var(--tag-bg); border-radius: 7px; padding: 14px 16px; }
-    .skill-item-name { font-size: 12px; font-weight: 600; color: var(--deep); margin-bottom: 4px; }
-    .skill-item-desc { font-size: 12px; color: var(--text-2); line-height: 1.75; }
 
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 28px 40px;
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
+    .contribution ul li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 9px;
+      width: 6px;
+      height: 1px;
+      background: var(--light);
     }
-    .footer-right a { font-size: 13px; color: var(--accent); text-decoration: none; }
-    .footer-right a:hover { text-decoration: underline; }
 
+    /* ── Additional projects ── */
+    .project-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      margin-top: 40px;
+    }
+
+    .proj-card {
+      border: 1px solid var(--rule);
+      border-radius: 2px;
+      overflow: hidden;
+      background: var(--white);
+    }
+
+    .proj-card-body {
+      padding: 20px 20px 24px;
+    }
+
+    .proj-card-body .proj-tag {
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--light);
+      margin-bottom: 6px;
+    }
+
+    .proj-card-body h3 {
+      font-size: 0.95rem;
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+
+    .proj-card-body .proj-role {
+      font-size: 0.78rem;
+      color: var(--light);
+      letter-spacing: 0.04em;
+      margin-bottom: 10px;
+    }
+
+    .proj-card-body p {
+      font-size: 0.84rem;
+      color: var(--mid);
+      line-height: 1.65;
+    }
+
+    .proj-thumb-grid {
+      display: grid;
+      gap: 3px;
+    }
+
+    .proj-thumb-grid.n1 { grid-template-columns: 1fr; }
+    .proj-thumb-grid.n2 { grid-template-columns: 1fr 1fr; }
+    .proj-thumb-grid.n4 { grid-template-columns: 1fr 1fr; }
+
+    .proj-thumb {
+      aspect-ratio: 1;
+      overflow: hidden;
+      background: #e8e5e0;
+    }
+
+    .proj-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* ── Process label strip ── */
+    .proc-label {
+      padding: 7px 12px;
+      background: var(--bg);
+      font-size: 0.6rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--light);
+      border-top: 1px solid var(--rule);
+    }
+
+    /* ── Responsive ── */
     @media (max-width: 720px) {
-      nav { padding: 18px 20px; }
-      .hero-inner { padding: 36px 20px 0; }
-      .hero-metrics { padding: 0 20px; grid-template-columns: repeat(2, 1fr); }
-      .hero-metric { padding: 16px 0 16px 16px; }
-      .hero-metric:nth-child(2) { border-right: none; }
-      .content { padding: 36px 20px 64px; }
-      .two-col { grid-template-columns: 1fr; gap: 24px; }
-      .role-cards { grid-template-columns: 1fr; }
-      .outcome-skills { grid-template-columns: 1fr; gap: 32px; }
-      .photo-row { grid-template-columns: repeat(2, 1fr); }
-      footer { padding: 20px; }
+      nav { padding: 20px 24px; }
+      section { padding: 48px 24px; }
+      .case-meta-grid { grid-template-columns: 1fr; gap: 32px; }
+      .direction-grid { grid-template-columns: 1fr 1fr; }
+      .img-grid.col-4 { grid-template-columns: repeat(2, 1fr); }
+      .img-grid.col-3 { grid-template-columns: repeat(2, 1fr); }
+      .contribution ul { grid-template-columns: 1fr; }
+      .project-cards { grid-template-columns: 1fr; }
+      .positioning { padding: 28px 24px; }
+    }
+
+    @media (max-width: 480px) {
+      .direction-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
   <nav>
-    <a class="back-link" href="../index.html">
-      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
-      返回作品集
-    </a>
+    <a href="../index.html">Kate Yeh · 葉渝旻</a>
+    <span class="sep">/</span>
+    <span class="current">藝人視覺方向統籌</span>
   </nav>
 
-  <div class="hero">
-    <div class="hero-inner">
-      <div class="hero-label">藝術視覺 · 形象企劃 · 拍攝籌備</div>
-      <h1 class="hero-title">
-        王頌<br><strong>視覺方向規劃與形象拍攝</strong>
-      </h1>
-      <p class="hero-subtitle">
-        從藝人的音樂氣質與個人特質出發，發展視覺定位語言，整理拍攝素材參考，主導形象拍攝方向，完成形象照與單曲視覺系列。
-      </p>
-      <div class="hero-tags">
-        <span class="tag">視覺企劃</span>
-        <span class="tag">形象規劃</span>
-        <span class="tag">拍攝籌備</span>
-        <span class="tag">音樂發行</span>
-      </div>
-      <div class="hero-meta">
-        <span class="meta-item">角色 &nbsp;<strong>視覺方向主導 · Moodboard 研究 · 拍攝準備</strong></span>
-        <span class="meta-item">客戶 &nbsp;<strong>獨立音樂人 王頌</strong></span>
-      </div>
-    </div>
-    <div class="hero-metrics">
-      <div class="hero-metric">
-        <div class="hm-value">12 個</div>
-        <div class="hm-label">視覺定位關鍵詞</div>
-      </div>
-      <div class="hero-metric">
-        <div class="hm-value">3 組</div>
-        <div class="hm-label">Moodboard 方向</div>
-      </div>
-      <div class="hero-metric">
-        <div class="hm-value">4 張</div>
-        <div class="hm-label">形象照完成</div>
-      </div>
-      <div class="hero-metric">
-        <div class="hm-value">2 款</div>
-        <div class="hm-label">視覺延伸應用</div>
-      </div>
-    </div>
-  </div>
+  <!-- Case Study: 王頌 -->
+  <section>
+    <p class="section-label">Artist & Repertoire for 王頌</p>
 
-  <div class="content">
-
-    <div class="two-col section">
-      <div>
-        <div class="col-title">專案背景</div>
-        <div class="col-body">
-          <p>王頌是台灣獨立音樂人，在新的創作階段需要建立更清晰、有主張的視覺識別，從過去較鬆散的呈現，轉向能夠延伸至形象照、單曲封面與社群應用的一致視覺語言。</p>
-          <p>本次合作從視覺定位發展出發，目標是讓藝人、攝影師與造型師在拍攝前達成共識，確保成品能精準傳達音樂氣質。</p>
-        </div>
+    <h2 class="case-title">王頌｜首張專輯視覺風格提案</h2>
+    <div class="case-meta-grid">
+      <div class="meta-block">
+        <h3>專案背景</h3>
+        <p>為王頌首張專輯《Sonnet of You》，從零開始建立藝人定位與視覺風格提案。目標是打造強烈、具情緒張力的視覺識別，作為她以個人歌手身份首次公開亮相的形象基礎。</p>
       </div>
-      <div>
-        <div class="col-title">核心挑戰</div>
-        <div class="col-body">
-          <p>視覺定位需要有足夠的精確度，讓執行端（攝影師、造型師）可以理解並落地，同時保有藝術彈性。</p>
-          <ul class="challenge-list">
-            <li class="challenge-item">藝人有強烈的個人審美感，但難以言說，需透過 reference 研究完成對齊</li>
-            <li class="challenge-item">視覺語言需同時服務形象照、單曲封面與社群素材，延展性要高</li>
-            <li class="challenge-item">拍攝前的素材準備需足夠具體，讓攝影師可以直接執行，減少當天溝通成本</li>
-          </ul>
-        </div>
+      <div class="meta-block">
+        <h3>我的角色</h3>
+        <ul>
+          <li>定義整體視覺風格與藝人定位</li>
+          <li>主導造型方向，並協助現場執行</li>
+          <li>蒐集與整理視覺參考素材</li>
+          <li>建立攝影、服裝、妝髮的提案 moodboard</li>
+          <li>與藝人及創意團隊對齊風格方向與執行細節</li>
+          <li>統籌拍攝前置作業與現場協調</li>
+        </ul>
       </div>
     </div>
 
-    <div class="section">
-      <div class="section-title">我的角色</div>
-      <div class="role-cards">
-        <div class="role-card">
-          <div class="role-card-num">01</div>
-          <div class="role-card-title">視覺定位研究</div>
-          <div class="role-card-desc">梳理藝人的音樂氣質、個人特質與目標形象，發展 12 個視覺定位關鍵詞，建立可被共同理解的視覺語言框架。</div>
-        </div>
-        <div class="role-card">
-          <div class="role-card-num">02</div>
-          <div class="role-card-title">Moodboard 素材整理</div>
-          <div class="role-card-desc">大量蒐集視覺 reference，組織為三組方向性 moodboard，與藝人多輪確認，確保方向共識再進入拍攝籌備。</div>
-        </div>
-        <div class="role-card">
-          <div class="role-card-num">03</div>
-          <div class="role-card-title">拍攝方向準備</div>
-          <div class="role-card-desc">整理拍攝方向文件，涵蓋燈光質感、服裝色調、場景氛圍與姿態參考，讓攝影師與造型師在拍攝當天有明確依循。</div>
-        </div>
+    <div class="positioning">
+      <p class="pos-label">藝人定位</p>
+      <p class="pos-title">暗魅系創作女聲。有稜角，有張力，不刻意討好。</p>
+      <p class="pos-sub">張狂的佔慾，末明的偏執 — 整個方向刻意迴避柔美或商業流行的視覺語言，目標是透過態度、輪廓與情緒張力，而非精緻感，來呈現藝人的個性。</p>
+    </div>
+
+    <div class="meta-block" style="margin-bottom: 48px;">
+      <h3 style="font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--light);margin-bottom:12px;">核心思考</h3>
+      <p style="font-size:0.92rem;color:var(--mid);line-height:1.8;">方向核心是建立一個不刻意拋光的視覺識別，在銳利感、情緒強度與收斂的感官張力之間取得平衡。藝人氣質的參考對象包括 Patti Smith、PJ Harvey 與椎名林檎，攝影語言則參考 Hedi Slimane 的高對比黑白影像風格。這些參考素材不是直接複製，而是用來定義藝人的肢體語言、造型方向與整體氛圍基調。</p>
+    </div>
+
+    <h3 style="font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--light);margin-bottom:16px;">視覺方向拆解</h3>
+    <div class="hashtag-block">
+      <span class="hashtag">#暗魅系</span>
+      <span class="hashtag">#有創性</span>
+      <span class="hashtag">#俐落</span>
+      <span class="hashtag">#有格調</span>
+      <span class="hashtag">#不造作</span>
+      <span class="hashtag">#黑白攝影</span>
+      <span class="hashtag">#高對比</span>
+      <span class="hashtag">#陰鬱感</span>
+      <span class="hashtag">#個性感女人味</span>
+      <span class="hashtag">#自信直接</span>
+      <span class="hashtag">#收斂</span>
+      <span class="hashtag">#情緒張力</span>
+    </div>
+    <div class="direction-grid">
+      <div class="dir-card">
+        <h4>藝人定位</h4>
+        <p>有創性、俐落、有格調、不造作。搖滾氣質吉他女歌手，形象鮮明且具個人感，洗鍊輪廓。</p>
+      </div>
+      <div class="dir-card">
+        <h4>拍攝風格</h4>
+        <p>黑白攝影、高對比、陰鬱感。以半身、近身或半姿為主，強調輪廓與直接的鏡頭存在感。參考：Hedi Slimane。</p>
+      </div>
+      <div class="dir-card">
+        <h4>服裝造型</h4>
+        <p>部分裸露，個性感女人味。凸顯身體線條、刺青與個人特質，帶有冷感與含蓄張力。</p>
+      </div>
+      <div class="dir-card">
+        <h4>妝髮</h4>
+        <p>微亂自然髮感，輕妝為主，不走浮誇路線。以凸顯五官輪廓為主要目標。</p>
+      </div>
+      <div class="dir-card">
+        <h4>肢體語言</h4>
+        <p>自信、直接、收斂。透過姿態傳達而非誇張動作。以半身、近身或斜躺為主要構圖。</p>
+      </div>
+      <div class="dir-card">
+        <h4>藝人參考</h4>
+        <p>Patti Smith — 氣場與存在感。<br>PJ Harvey — 稜角與肢體張力。<br>椎名林檎 — 強烈個人風格。</p>
       </div>
     </div>
 
-    <div class="section">
-      <div class="section-title">執行過程</div>
-      <ol class="process-list">
-        <li class="process-step">
-          <span class="step-num">01</span>
-          <div>
-            <div class="step-title">深入訪談與音樂聆聽</div>
-            <div class="step-desc">聆聽王頌的音樂作品，並透過訪談了解創作脈絡、目標聽眾與個人審美偏好，找到視覺語言的著力點與邊界。</div>
+    <div class="image-section">
+      <h3>參考素材</h3>
+      <div class="img-grid col-3">
+        <div class="img-wrapper">
+          <div class="img-slot" style="aspect-ratio:16/9">
+            <img src="../assets/images/ref_artist.png" alt="藝人參考">
           </div>
-        </li>
-        <li class="process-step">
-          <span class="step-num">02</span>
-          <div>
-            <div class="step-title">視覺定位關鍵詞發展</div>
-            <div class="step-desc">將訪談結果轉化為 12 個精準的視覺定位關鍵詞，形成可被量化、可被討論的視覺語言基礎，作為後續所有視覺決策的參照依據。</div>
-          </div>
-        </li>
-        <li class="process-step">
-          <span class="step-num">03</span>
-          <div>
-            <div class="step-title">Moodboard 研究與多輪對齊</div>
-            <div class="step-desc">蒐集大量 reference，整理為三組不同方向性的 moodboard，與藝人多輪討論確認，直到雙方對視覺方向達成清楚共識。</div>
-            <div class="step-image">
-              <img src="../assets/images/ref_portrait.png" alt="Portrait moodboard reference">
-              <div class="step-image-caption">Portrait 方向：人像燈光、質感與姿態參考素材整理</div>
-            </div>
-            <div class="step-image" style="margin-top: 10px;">
-              <img src="../assets/images/ref_editorial.png" alt="Editorial moodboard reference">
-              <div class="step-image-caption">Editorial 方向：空間感、構圖與反差對比參考素材</div>
-            </div>
-          </div>
-        </li>
-        <li class="process-step">
-          <span class="step-num">04</span>
-          <div>
-            <div class="step-title">拍攝方向文件整理與拍攝</div>
-            <div class="step-desc">將確認後的視覺方向轉化為可執行的拍攝準備文件，涵蓋燈光、服裝、場景、姿態與構圖方向，確保拍攝當天能有效執行，減少即興決策。</div>
-          </div>
-        </li>
-        <li class="process-step">
-          <span class="step-num">05</span>
-          <div>
-            <div class="step-title">成品輸出與視覺延伸</div>
-            <div class="step-desc">完成 4 張黑白形象照，建立清晰的藝人視覺識別，後續成功延伸應用至單曲封面視覺，確保形象一致性。</div>
-            <div class="photo-row" style="margin-top: 14px;">
-              <img src="../assets/images/songwang_01.jpg" alt="王頌形象照 1">
-              <img src="../assets/images/songwang_02.jpg" alt="王頌形象照 2">
-              <img src="../assets/images/songwang_03.jpg" alt="王頌形象照 3">
-              <img src="../assets/images/songwang_04.jpg" alt="王頌形象照 4">
-            </div>
-          </div>
-        </li>
-      </ol>
-    </div>
-
-    <div class="section">
-      <div class="outcome-skills">
-        <div>
-          <div class="section-title">專案成果</div>
-          <ul class="outcome-list">
-            <li class="outcome-item">完成 4 張黑白形象照，建立清晰且具延展性的藝人視覺語言</li>
-            <li class="outcome-item">視覺定位成功延伸至單曲封面，形象一致性高</li>
-            <li class="outcome-item">藝人、攝影師與造型師在拍攝前達成清楚共識，現場執行順暢</li>
-          </ul>
+          <span class="img-caption">藝人參考 — Patti Smith · PJ Harvey · 椎名林檎</span>
         </div>
-        <div>
-          <div class="section-title">可轉移能力</div>
-          <div class="skill-stack">
-            <div class="skill-item">
-              <div class="skill-item-name">抽象轉具象的轉譯能力</div>
-              <div class="skill-item-desc">將難以言說的美學偏好轉化為可被執行的視覺語言，對應任何需要將概念落地的企劃角色</div>
-            </div>
-            <div class="skill-item">
-              <div class="skill-item-name">多方溝通與共識建立</div>
-              <div class="skill-item-desc">整合藝人、攝影師、造型師的不同視角，在創作現場達成有效共識</div>
-            </div>
-            <div class="skill-item">
-              <div class="skill-item-name">系統化研究與素材整理</div>
-              <div class="skill-item-desc">大量資訊蒐集、整理與篩選，快速建立可操作的參考框架</div>
-            </div>
+        <div class="img-wrapper">
+          <div class="img-slot" style="aspect-ratio:16/9">
+            <img src="../assets/images/ref_editorial.png" alt="攝影造型參考">
           </div>
+          <span class="img-caption">攝影造型參考 — Hedi Slimane 黑白 editorial 風格</span>
+        </div>
+        <div class="img-wrapper">
+          <div class="img-slot" style="aspect-ratio:16/9">
+            <img src="../assets/images/ref_portrait.png" alt="攝影參考">
+          </div>
+          <span class="img-caption">攝影參考 — 黑白肖像構圖與光影對比</span>
         </div>
       </div>
     </div>
 
-  </div>
-
-  <footer>
-    <div class="footer-right">
-      <a href="https://www.linkedin.com/in/kate-yeh-64955873/" target="_blank" rel="noopener">LinkedIn → Kate Yeh</a>
+    <div class="image-section">
+      <h3>拍攝成果</h3>
+      <p style="font-size:0.82rem;color:var(--light);margin-bottom:16px;line-height:1.6;">最終成果由初始視覺方向發展而來，將參考語言轉譯為藝人的具體形象。攝影及製作由創意製作團隊執行。</p>
+      <div class="img-grid col-4">
+        <div class="img-wrapper">
+          <div class="img-slot"><img src="../assets/images/songwang_01.jpg" alt="拍攝成果"></div>
+        </div>
+        <div class="img-wrapper">
+          <div class="img-slot"><img src="../assets/images/songwang_02.jpg" alt="拍攝成果"></div>
+        </div>
+        <div class="img-wrapper">
+          <div class="img-slot"><img src="../assets/images/songwang_03.jpg" alt="拍攝成果"></div>
+        </div>
+        <div class="img-wrapper">
+          <div class="img-slot"><img src="../assets/images/songwang_04.jpg" alt="拍攝成果"></div>
+        </div>
+      </div>
     </div>
-  </footer>
+
+    <div class="contribution">
+      <h3>這個案例說明了什麼</h3>
+      <ul>
+        <li>能夠將抽象的藝人定位轉化為具體可執行的視覺方向</li>
+        <li>以參考素材研究為基礎，有效對齊創意團隊的共識</li>
+        <li>跨攝影、造型、氛圍與視覺呈現的審美判斷力</li>
+        <li>從概念到執行的創意專案協調經驗</li>
+        <li>具備主導並親身執行視覺方向的能力，不僅限於協調角色</li>
+        <li>能夠在尊重藝人個性的前提下，建立清晰且可操作的視覺框架</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Additional Projects -->
+  <section>
+    <p class="section-label">Additional Artist Projects</p>
+    <p style="font-size:0.92rem;color:var(--mid);line-height:1.75;margin-bottom:40px;">除王頌案例外，我亦參與多位藝人的視覺方向工作，協助釐清整體視覺定位、整理參考素材，並協調藝人、設計師、攝影師與內部團隊達成共識。以下案例呈現的不是設計或攝影成果本身，而是我在視覺溝通、審美判斷與創意協調方面的工作方式。</p>
+
+    <div class="project-cards">
+
+      <div class="proj-card">
+        <div class="proj-thumb-grid n1">
+          <div class="proj-thumb"><img src="../assets/images/songwang_single.jpg" alt="王頌 單曲視覺"></div>
+        </div>
+        <div class="proj-card-body">
+          <p class="proj-tag">Single Release</p>
+          <h3>王頌｜單曲視覺延伸</h3>
+          <p class="proj-role">Single visual direction · Release coordination</p>
+          <p>首張專輯視覺建立後，持續統籌王頌單曲發行的視覺方向，依不同單曲的情緒調性調整視覺語言，延伸藝人形象識別。</p>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proc-label" style="border-top: none;">Result</div>
+        <div class="proj-thumb-grid n4">
+          <div class="proj-thumb"><img src="../assets/images/nio_portrait.jpg" alt="NIO 形象照"></div>
+          <div class="proj-thumb"><img src="../assets/images/nio_01.png" alt="NIO 私下情人"></div>
+          <div class="proj-thumb"><img src="../assets/images/nio_02.png" alt="NIO Just Stay"></div>
+          <div class="proj-thumb"><img src="../assets/images/nio_03.png" alt="NIO"></div>
+        </div>
+        <div class="proc-label">Reference Board</div>
+        <div class="proj-thumb" style="aspect-ratio: 16/9;">
+          <img src="../assets/images/nio_ref01.png" alt="NIO 姿勢視角參考" style="object-position: top;">
+        </div>
+        <div class="proj-card-body">
+          <p class="proj-tag">Artist / Single Release</p>
+          <h3>NIO｜形象照 & 單曲發行</h3>
+          <p class="proj-role">Artist image direction · Single cover art direction · Production coordination</p>
+          <p>協助建立 NIO 整體藝人形象定位，並統籌單曲發行計劃，包含封面拍攝的視覺方向設定與現場執行協調。</p>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-thumb-grid n2">
+          <div class="proj-thumb"><img src="../assets/images/neciken_01.jpg" alt="南西肯恩 形象照"></div>
+          <div class="proj-thumb"><img src="../assets/images/neciken_02.jpg" alt="南西肯恩 專輯視覺"></div>
+        </div>
+        <div class="proj-card-body">
+          <p class="proj-tag">Artist / Album Release</p>
+          <h3>南西肯恩｜形象照 & 專輯視覺</h3>
+          <p class="proj-role">Artist image direction · Album visual production coordination</p>
+          <p>負責藝人形象照視覺方向設定，並統籌專輯發行整體視覺製作，協調攝影與設計團隊完成執行。</p>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proc-label" style="border-top: none;">Result</div>
+        <div class="proj-thumb" style="aspect-ratio: 3/2; overflow: hidden; background: #e8e5e0;">
+          <img src="../assets/images/neciken_03.jpg" alt="南西肯恩 拍攝成果" style="width:100%;height:100%;object-fit:cover;">
+        </div>
+        <div class="proc-label">Reference Board</div>
+        <div class="proj-thumb" style="aspect-ratio: 16/9;">
+          <img src="../assets/images/neciken_ref01.png" alt="南西肯恩 reference board" style="object-position: top;">
+        </div>
+        <div class="proj-card-body">
+          <p class="proj-tag">Process</p>
+          <h3>南西肯恩｜發想過程</h3>
+          <p class="proj-role">Reference curation · Mood direction</p>
+          <p>以花卉、植物與自然光感為核心，建立拍攝氛圍基準。柔和、詩意、帶有神秘氣息的意象語言，引導攝影師在構圖與情緒上與藝人特質對齊。</p>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-thumb-grid n1">
+          <div class="proj-thumb"><img src="../assets/images/sleepingbrain_01.jpg" alt="Sleeping Brain 形象照"></div>
+        </div>
+        <div class="proj-card-body">
+          <p class="proj-tag">Artist</p>
+          <h3>Sleeping Brain｜形象照提案</h3>
+          <p class="proj-role">Artist visual proposal · Image direction</p>
+          <p>為 Sleeping Brain 提出藝人形象照整體視覺方向提案，包含造型概念、拍攝氛圍與視覺語言建議。</p>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proc-label" style="border-top: none;">Result</div>
+        <div class="proj-thumb" style="aspect-ratio: 1; overflow: hidden; background: #e8e5e0;">
+          <img src="../assets/images/sleepingbrain_02.jpg" alt="Sleeping Brain 拍攝成果" style="width:100%;height:100%;object-fit:cover;">
+        </div>
+        <div class="proc-label">Reference Board</div>
+        <div class="proj-thumb" style="aspect-ratio: 16/9;">
+          <img src="../assets/images/sleepingbrain_ref01.png" alt="Sleeping Brain reference board" style="object-position: top;">
+        </div>
+        <div class="proj-card-body">
+          <p class="proj-tag">Process</p>
+          <h3>Sleeping Brain｜發想過程</h3>
+          <p class="proj-role">Reference curation · Concept direction</p>
+          <p>以廢墟、腐敗與末世場景作為視覺語言基底，建立暗黑、超現實的氛圍參考。意象選擇強調結構崩解與張力感，引導整體拍攝方向。</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
 
 </body>
 </html>
