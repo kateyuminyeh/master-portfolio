@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>集資專案庫存自動監控工具 — Kate Yeh</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #f9f8f6;
+      --white: #ffffff;
+      --ink: #141414;
+      --mid: #555555;
+      --light: #999999;
+      --rule: #e2dfd9;
+      --max: 960px;
+    }
+
+    body {
+      font-family: 'Helvetica Neue', Helvetica, 'PingFang TC', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.6;
+    }
+
+    nav {
+      padding: 28px 48px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    nav a {
+      font-size: 0.8rem;
+      letter-spacing: 0.06em;
+      text-decoration: none;
+      color: var(--light);
+      transition: color 0.2s;
+    }
+
+    nav a:hover { color: var(--ink); }
+    nav .sep { color: var(--rule); font-size: 0.8rem; }
+    nav .current { color: var(--ink); font-size: 0.8rem; }
+
+    section {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 64px 48px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    section:last-of-type { border-bottom: none; }
+
+    .label {
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--light);
+      margin-bottom: 32px;
+    }
+
+    h2 {
+      font-size: clamp(1.3rem, 2.5vw, 1.9rem);
+      font-weight: 500;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+      margin-bottom: 28px;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      margin-top: 40px;
+    }
+
+    .meta-block h3 {
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--light);
+      margin-bottom: 10px;
+    }
+
+    .meta-block p {
+      font-size: 0.88rem;
+      color: var(--mid);
+      line-height: 1.75;
+    }
+
+    .meta-block ul {
+      list-style: none;
+      font-size: 0.88rem;
+      color: var(--mid);
+      line-height: 1.75;
+    }
+
+    .meta-block ul li::before {
+      content: "—";
+      margin-right: 8px;
+      color: var(--rule);
+    }
+
+    .context-strip {
+      background: var(--ink);
+      color: #fff;
+      padding: 36px 48px;
+      margin: 40px 0 0;
+      border-radius: 2px;
+    }
+
+    .context-strip .strip-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 16px;
+    }
+
+    .context-strip p {
+      font-size: 0.92rem;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.8;
+    }
+
+    /* Feature cards */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-top: 40px;
+    }
+
+    .feature-card {
+      background: var(--white);
+      padding: 28px 24px 32px;
+    }
+
+    .feature-card h4 {
+      font-size: 0.88rem;
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+
+    .feature-card p {
+      font-size: 0.84rem;
+      color: var(--mid);
+      line-height: 1.7;
+    }
+
+    /* Code block */
+    .code-block {
+      margin-top: 40px;
+      border-radius: 4px;
+      overflow: hidden;
+      border: 1px solid var(--rule);
+    }
+
+    .code-block img {
+      width: 100%;
+      display: block;
+    }
+
+    @media (max-width: 720px) {
+      nav { padding: 20px 24px; }
+      section { padding: 48px 24px; }
+      .meta-grid { grid-template-columns: 1fr; gap: 32px; }
+      .feature-grid { grid-template-columns: 1fr; }
+      .context-strip { padding: 28px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="../index.html">Kate Yeh · 葉渝旻</a>
+    <span class="sep">/</span>
+    <span class="current">集資專案庫存自動監控工具</span>
+  </nav>
+
+  <section>
+    <p class="label">自動化 / 工具</p>
+    <h2>集資專案庫存自動監控工具</h2>
+
+    <div class="meta-grid">
+      <div class="meta-block">
+        <h3>需求背景</h3>
+        <p>執行集資專案期間，需要每天不定時檢查合作平台的專案頁面，確認特定商品的剩餘庫存數量，一旦低於設定閾值即需立即回報，以便補量或調整銷售策略。</p>
+        <br>
+        <p>然而，平台方因與其他合作方有協議限制，不允許使用傳統爬蟲直接抓取資料。</p>
+      </div>
+      <div class="meta-block">
+        <h3>我的做法</h3>
+        <ul>
+          <li>定義監控需求與通知條件</li>
+          <li>設計瀏覽器模擬方案繞過爬蟲限制</li>
+          <li>設定庫存閾值與觸發邏輯</li>
+          <li>建立 Email 與 Slack 雙管道通知</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="context-strip">
+      <p class="strip-label">技術選擇</p>
+      <p>由於平台頁面無法直接爬取，改以 Playwright 模擬真實瀏覽器行為——定時在背景開啟目標頁面，讀取頁面中的庫存數字，與設定閾值比對後觸發通知。對平台而言，這與一般使用者造訪頁面的行為相同，不涉及未授權的資料存取。</p>
+    </div>
+  </section>
+
+  <section>
+    <p class="label">功能設計</p>
+    <h2>三個核心功能</h2>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <h4>瀏覽器模擬監控</h4>
+        <p>以 Playwright 定時啟動 headless 瀏覽器，開啟專案頁面後讀取頁面中的剩餘數量文字，不依賴 API 或直接請求，行為與一般使用者相同。</p>
+      </div>
+      <div class="feature-card">
+        <h4>閾值觸發通知</h4>
+        <p>設定庫存數量閾值，當偵測到剩餘數量低於設定值時自動觸發通知，避免人工盯盤的時間成本。</p>
+      </div>
+      <div class="feature-card">
+        <h4>多管道通知</h4>
+        <p>支援 Email 寄送提醒，並可設定推播至內部 Slack 頻道，確保相關人員即時收到庫存異動通知。</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <p class="label">程式碼</p>
+    <h2>核心邏輯</h2>
+    <div class="code-block">
+      <img src="../assets/images/zeczec-cover.png" alt="監控工具程式碼">
+    </div>
+  </section>
+
+</body>
+</html>

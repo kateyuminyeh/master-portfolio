@@ -157,6 +157,8 @@
     }
 
     .card.hidden { display: none; }
+    .card.no-link { cursor: default; }
+    .card.no-link:hover { border-color: var(--rule); box-shadow: none; transform: none; }
 
     .card-thumb {
       width: 100%;
@@ -351,6 +353,26 @@
         "type": "視覺 / 創意方向"
       },
       {
+        "id": "copyright",
+        "title": "音樂版稅版權分析工具",
+        "subtitle": "CSV 上傳 · Tier 分析 · 預付金抵扣試算",
+        "cover": "assets/images/copyright-cover.png",
+        "url": "projects/copyright.html",
+        "tags": ["系統設計", "音樂產業"],
+        "metric": { "value": "4 個", "label": "分析模組" },
+        "type": "工具 / 資料分析"
+      },
+      {
+        "id": "zeczec",
+        "title": "集資專案庫存自動監控工具",
+        "subtitle": "瀏覽器模擬 · 閾值觸發 · 多管道通知",
+        "cover": "assets/images/zeczec-cover.png",
+        "url": "projects/zeczec.html",
+        "tags": ["系統設計", "群眾募資"],
+        "metric": { "value": "自動", "label": "庫存異動即時通知" },
+        "type": "自動化 / 工具"
+      },
+      {
         "id": "piccollage",
         "title": "PicCollage — 視覺趨勢情蒐系統",
         "subtitle": "半自動情報管道 · 4 大趨勢群組 · 內容策展優先矩陣",
@@ -378,10 +400,12 @@
         : projects.filter(p => p.tags.includes(activeTag));
 
       filtered.forEach(p => {
-        const card = document.createElement('a');
-        card.className = 'card';
-        card.href = p.url;
-        if (p.url.startsWith('http')) { card.target = '_blank'; card.rel = 'noopener'; }
+        const card = document.createElement(p.url ? 'a' : 'div');
+        card.className = 'card' + (p.url ? '' : ' no-link');
+        if (p.url) {
+          card.href = p.url;
+          if (p.url.startsWith('http')) { card.target = '_blank'; card.rel = 'noopener'; }
+        }
         card.innerHTML = `
           <div class="card-thumb">
             <img src="${p.cover}" alt="${p.title}" loading="lazy">

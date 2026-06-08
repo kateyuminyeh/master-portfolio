@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>音樂版稅版權分析工具 — Kate Yeh</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #f9f8f6;
+      --white: #ffffff;
+      --ink: #141414;
+      --mid: #555555;
+      --light: #999999;
+      --rule: #e2dfd9;
+      --accent: #4f46e5;
+      --max: 960px;
+    }
+
+    body {
+      font-family: 'Helvetica Neue', Helvetica, 'PingFang TC', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.6;
+    }
+
+    nav {
+      padding: 28px 48px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    nav a {
+      font-size: 0.8rem;
+      letter-spacing: 0.06em;
+      text-decoration: none;
+      color: var(--light);
+      transition: color 0.2s;
+    }
+
+    nav a:hover { color: var(--ink); }
+    nav .sep { color: var(--rule); font-size: 0.8rem; }
+    nav .current { color: var(--ink); font-size: 0.8rem; }
+
+    section {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 64px 48px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    section:last-of-type { border-bottom: none; }
+
+    .label {
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--light);
+      margin-bottom: 32px;
+    }
+
+    h2 {
+      font-size: clamp(1.3rem, 2.5vw, 1.9rem);
+      font-weight: 500;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+      margin-bottom: 28px;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      margin-top: 40px;
+    }
+
+    .meta-block h3 {
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--light);
+      margin-bottom: 10px;
+    }
+
+    .meta-block p {
+      font-size: 0.88rem;
+      color: var(--mid);
+      line-height: 1.75;
+    }
+
+    .meta-block ul {
+      list-style: none;
+      font-size: 0.88rem;
+      color: var(--mid);
+      line-height: 1.75;
+    }
+
+    .meta-block ul li::before {
+      content: "—";
+      margin-right: 8px;
+      color: var(--rule);
+    }
+
+    /* Context strip */
+    .context-strip {
+      background: var(--ink);
+      color: #fff;
+      padding: 36px 48px;
+      margin: 40px 0;
+      border-radius: 2px;
+    }
+
+    .context-strip .strip-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 16px;
+    }
+
+    .context-strip p {
+      font-size: 0.92rem;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.8;
+    }
+
+    /* Module cards */
+    .module-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-bottom: 48px;
+    }
+
+    .module-card {
+      background: var(--white);
+      padding: 28px 28px 32px;
+    }
+
+    .module-num {
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    .module-card h4 {
+      font-size: 0.95rem;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+
+    .module-card p {
+      font-size: 0.84rem;
+      color: var(--mid);
+      line-height: 1.7;
+    }
+
+    /* Screenshots */
+    .screenshot-block {
+      margin-bottom: 40px;
+    }
+
+    .screenshot-block h3 {
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--light);
+      margin-bottom: 12px;
+    }
+
+    .screenshot-block img {
+      width: 100%;
+      display: block;
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+    }
+
+    /* Demo notice */
+    .demo-notice {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      border-radius: 4px;
+      padding: 16px 20px;
+      font-size: 0.84rem;
+      color: #92400e;
+      line-height: 1.65;
+    }
+
+    .demo-link {
+      display: inline-block;
+      margin-top: 16px;
+      font-size: 0.82rem;
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid var(--rule);
+      padding-bottom: 2px;
+      transition: border-color 0.2s;
+    }
+
+    .demo-link:hover { border-color: var(--ink); }
+
+    @media (max-width: 720px) {
+      nav { padding: 20px 24px; }
+      section { padding: 48px 24px; }
+      .meta-grid { grid-template-columns: 1fr; gap: 32px; }
+      .module-grid { grid-template-columns: 1fr; }
+      .context-strip { padding: 28px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="../index.html">Kate Yeh · 葉渝旻</a>
+    <span class="sep">/</span>
+    <span class="current">音樂版稅版權分析工具</span>
+  </nav>
+
+  <!-- 背景 -->
+  <section>
+    <p class="label">工具 / 資料分析</p>
+    <h2>音樂版稅版權分析工具</h2>
+
+    <div class="meta-grid">
+      <div class="meta-block">
+        <h3>專案背景</h3>
+        <p>以平台方版權經理的角色，需要定期評估合作廠牌的內容收聽表現與版稅收入走勢，判斷是否具備續約潛力，並估算合理的預付金範圍。現有報表為多份 CSV，散落在不同合約週期，缺乏整合分析工具。這個工具以釐清需求為目的，加速內部討論與判斷流程。</p>
+      </div>
+      <div class="meta-block">
+        <h3>我的角色</h3>
+        <ul>
+          <li>定義分析需求與功能範圍</li>
+          <li>設計四大分析模組的邏輯架構</li>
+          <li>規劃 CSV 報表格式與資料欄位</li>
+          <li>建立 demo 工具供內部試用與需求確認</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="context-strip">
+      <p class="strip-label">使用情境</p>
+      <p>版權經理在與廠牌洽談合約前，需要一份快速可用的分析依據：這個廠牌的收聽量成長了嗎？版稅有沒有實際累積？預付金已抵扣多少？若要重新報價，合理的區間是什麼？這個工具讓這些問題可以在一個畫面內快速回答。</p>
+    </div>
+  </section>
+
+  <!-- 四大模組 -->
+  <section>
+    <p class="label">功能架構</p>
+    <h2>四大分析模組</h2>
+    <div class="module-grid">
+      <div class="module-card">
+        <p class="module-num">Module 01</p>
+        <h4>逐年趨勢</h4>
+        <p>上傳多份 CSV 報表後，自動彙整逐年點聽次數與版稅收入走勢，搭配 YoY 增減幅度，快速掌握廠牌的內容成長軌跡。</p>
+      </div>
+      <div class="module-card">
+        <p class="module-num">Module 02</p>
+        <h4>Tier 分析</h4>
+        <p>依發行年份將曲目分為新歌（2022 後）、舊歌（2000–2021）、經典（2000 前），分析各層版稅佔比與逐年分布，輔助評估長尾效應與合約風險。</p>
+      </div>
+      <div class="module-card">
+        <p class="module-num">Module 03</p>
+        <h4>預付金抵扣</h4>
+        <p>輸入合約預付金金額，自動計算歷年版稅累積抵扣進度，顯示目前抵扣比例與尚餘未抵金額，作為續約判斷的關鍵依據之一。</p>
+      </div>
+      <div class="module-card">
+        <p class="module-num">Module 04</p>
+        <h4>新合約模擬</h4>
+        <p>輸入對方廠牌的預估年均版稅與成長率，以自家數據作為 benchmark，模擬不同預付金與合約年期下的抵扣可行性，快速收斂報價區間。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 截圖 -->
+  <section>
+    <p class="label">介面展示</p>
+    <h2>工具畫面</h2>
+
+    <div class="screenshot-block">
+      <h3>Module 01 · 逐年趨勢</h3>
+      <img src="../assets/images/copyright-tab1-trend.png" alt="逐年趨勢">
+    </div>
+
+    <div class="screenshot-block">
+      <h3>Module 02 · Tier 分析</h3>
+      <img src="../assets/images/copyright-cover.png" alt="Tier 分析">
+    </div>
+
+    <div class="screenshot-block">
+      <h3>Module 03 · 預付金抵扣</h3>
+      <img src="../assets/images/copyright-tab3-advance.png" alt="預付金抵扣">
+    </div>
+
+    <div class="screenshot-block">
+      <h3>Module 04 · 新合約模擬</h3>
+      <img src="../assets/images/copyright-tab4-simulate.png" alt="新合約模擬">
+    </div>
+
+    <div class="demo-notice">
+      此工具為 demo 階段，以釐清需求、加速討論為目的，工具並未正式上線。
+    </div>
+  </section>
+
+</body>
+</html>
