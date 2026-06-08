@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>大型活動車輛接駁調度系統 — Kate Yeh</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #f9f8f6;
+      --white: #ffffff;
+      --ink: #141414;
+      --mid: #555555;
+      --light: #999999;
+      --rule: #e2dfd9;
+      --max: 960px;
+    }
+
+    body {
+      font-family: 'Helvetica Neue', Helvetica, 'PingFang TC', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.6;
+    }
+
+    nav {
+      padding: 28px 48px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    nav a {
+      font-size: 0.8rem;
+      letter-spacing: 0.06em;
+      text-decoration: none;
+      color: var(--light);
+      transition: color 0.2s;
+    }
+
+    nav a:hover { color: var(--ink); }
+    nav .sep { color: var(--rule); font-size: 0.8rem; }
+    nav .current { color: var(--ink); font-size: 0.8rem; }
+
+    section {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 64px 48px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    section:last-of-type { border-bottom: none; }
+
+    .label {
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--light);
+      margin-bottom: 32px;
+    }
+
+    h2 {
+      font-size: clamp(1.3rem, 2.5vw, 1.9rem);
+      font-weight: 500;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+      margin-bottom: 28px;
+    }
+
+    h3 {
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: 12px;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      margin-top: 40px;
+    }
+
+    .meta-block h4 {
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--light);
+      margin-bottom: 10px;
+    }
+
+    .meta-block p {
+      font-size: 0.88rem;
+      color: var(--mid);
+      line-height: 1.75;
+    }
+
+    .meta-block ul {
+      list-style: none;
+      font-size: 0.88rem;
+      color: var(--mid);
+      line-height: 1.75;
+    }
+
+    .meta-block ul li::before {
+      content: "—";
+      margin-right: 8px;
+      color: var(--rule);
+    }
+
+    .context-strip {
+      background: var(--ink);
+      color: #fff;
+      padding: 36px 48px;
+      margin: 40px 0 0;
+      border-radius: 2px;
+    }
+
+    .context-strip .strip-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 16px;
+    }
+
+    .context-strip p {
+      font-size: 0.92rem;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.8;
+    }
+
+    /* Pain point cards */
+    .pain-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-top: 40px;
+    }
+
+    .pain-card {
+      background: var(--white);
+      padding: 28px 24px 32px;
+    }
+
+    .pain-card .pain-num {
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--light);
+      margin-bottom: 10px;
+    }
+
+    .pain-card h4 {
+      font-size: 0.92rem;
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+
+    .pain-card p {
+      font-size: 0.84rem;
+      color: var(--mid);
+      line-height: 1.7;
+    }
+
+    /* Solution cards */
+    .solution-list {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      margin-top: 40px;
+    }
+
+    .solution-item {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 32px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .solution-item:last-child { border-bottom: none; padding-bottom: 0; }
+
+    .solution-num {
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--light);
+      padding-top: 4px;
+    }
+
+    .solution-content h4 {
+      font-size: 0.95rem;
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+
+    .solution-content p {
+      font-size: 0.88rem;
+      color: var(--mid);
+      line-height: 1.75;
+    }
+
+    .solution-content ul {
+      list-style: none;
+      font-size: 0.88rem;
+      color: var(--mid);
+      line-height: 1.75;
+      margin-top: 8px;
+    }
+
+    .solution-content ul li::before {
+      content: "·";
+      margin-right: 8px;
+      color: var(--light);
+    }
+
+    /* Step screenshots */
+    .step-block {
+      margin-bottom: 48px;
+    }
+
+    .step-block:last-child { margin-bottom: 0; }
+
+    .step-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--light);
+      margin-bottom: 12px;
+    }
+
+    .step-title {
+      font-size: 0.95rem;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+
+    .step-desc {
+      font-size: 0.88rem;
+      color: var(--mid);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .step-img {
+      width: 100%;
+      display: block;
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+    }
+
+    .step-img-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .step-img-row img {
+      width: 100%;
+      display: block;
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+    }
+
+    /* Mobile img */
+    .mobile-wrap {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .mobile-wrap img {
+      max-width: 320px;
+      width: 100%;
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+    }
+
+    @media (max-width: 720px) {
+      nav { padding: 20px 24px; }
+      section { padding: 48px 24px; }
+      .meta-grid { grid-template-columns: 1fr; gap: 32px; }
+      .pain-grid { grid-template-columns: 1fr; }
+      .solution-item { grid-template-columns: 1fr; gap: 8px; }
+      .context-strip { padding: 28px 24px; }
+      .step-img-row { grid-template-columns: 1fr; }
+      .mobile-wrap img { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="../index.html">Kate Yeh · 葉渝旻</a>
+    <span class="sep">/</span>
+    <span class="current">大型活動車輛接駁調度系統</span>
+  </nav>
+
+  <!-- 背景 -->
+  <section>
+    <p class="label">系統設計 / 活動行政</p>
+    <h2>大型活動「多維度車輛接駁調度系統」</h2>
+
+    <div class="meta-grid">
+      <div class="meta-block">
+        <h4>專案背景</h4>
+        <p>為大型音樂祭設計的複雜接駁調度系統。原本依賴一份平面 Excel 表格，在百筆任務、多組藝人、多類車型的情境下，效率與準確度都難以維持。</p>
+      </div>
+      <div class="meta-block">
+        <h4>我的角色</h4>
+        <ul>
+          <li>定義資料模型與系統架構</li>
+          <li>設計 SSOT 跨單位同步機制</li>
+          <li>建立業務邏輯自動化規則</li>
+          <li>規劃角色化視圖與權限分流</li>
+          <li>與 AI 協作實現複雜字串計算</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pain-grid">
+      <div class="pain-card">
+        <p class="pain-num">Pain 01</p>
+        <h4>資訊孤島</h4>
+        <p>藝人需求、車輛配置與行程動線缺乏關聯，修改一處需手動同步多處，效率不高且容易出錯。</p>
+      </div>
+      <div class="pain-card">
+        <p class="pain-num">Pain 02</p>
+        <h4>人工計算瓶頸</h4>
+        <p>單一需求拆分為多台車輛（如 T5 + 大巴）時，調度員需手動記錄分派順序，在百筆任務中造成巨大負荷。</p>
+      </div>
+      <div class="pain-card">
+        <p class="pain-num">Pain 03</p>
+        <h4>決策盲點</h4>
+        <p>缺乏時空視圖，無法直觀判斷車輛在結束上一趟後是否能銜接下一趟任務，難以最大化車輛利用率。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 解決方案 -->
+  <section>
+    <p class="label">系統設計亮點</p>
+    <h2>三個核心突破</h2>
+
+    <div class="solution-list">
+      <div class="solution-item">
+        <div class="solution-num">突破 01</div>
+        <div class="solution-content">
+          <h4>資料建模與 SSOT 單一事實來源</h4>
+          <p>拆解「需求、任務、車輛、地點、藝人」五大維度，建立網狀資料架構。所有新增與變動統一由單一窗口輸入，透過既定工作流逐步分派車趟，確保全場不同單位在毫秒內同步——資料輸入一次，全場動態聯動。</p>
+        </div>
+      </div>
+      <div class="solution-item">
+        <div class="solution-num">突破 02</div>
+        <div class="solution-content">
+          <h4>業務邏輯自動化</h4>
+          <ul>
+            <li>實作 [1/n] 車種分流序號系統，由系統自動辨識「同需求、不同車種」的派車順序，取代人工計算</li>
+            <li>將調度經驗（接機緩衝 40 分、交通時長預設 50 分）寫入系統邏輯，讓資料庫具備專業調度員的判斷力</li>
+          </ul>
+        </div>
+      </div>
+      <div class="solution-item">
+        <div class="solution-num">突破 03</div>
+        <div class="solution-content">
+          <h4>多維度 UI 與角色化視圖</h4>
+          <p>針對節目統籌、派車組、後台經理、車行等不同單位設計專屬介面，依角色篩選資料深度與權限。透過 Timeline 視圖直觀判斷車趟銜接與衝突，大幅提升現場應變效率。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="context-strip">
+      <p class="strip-label">人機協作</p>
+      <p>在面對 Airtable 複雜的字串計算（LEN/SUBSTITUTE）與資料型態轉換挑戰時，採取精準提問策略——不要求 AI 直接給答案，而是一同辯證資料架構，要求 AI 解釋底層編碼原則。我負責定義業務場景與標準參數，AI 負責實現語法細節。「我是架構師，AI 是我的首席工程師。」</p>
+    </div>
+  </section>
+
+  <!-- 工作流程與截圖 -->
+  <section>
+    <p class="label">系統介面</p>
+    <h2>更新後的工作流程</h2>
+
+    <div class="step-block">
+      <p class="step-label">Step 01</p>
+      <p class="step-title">新增需求</p>
+      <p class="step-desc">所有新增的需求、新增的變動，都統一由此建立任務。</p>
+      <img class="step-img" src="../assets/images/dispatch-step1.png" alt="Step 1 新增需求">
+    </div>
+
+    <div class="step-block">
+      <p class="step-label">Step 02</p>
+      <p class="step-title">分派任務</p>
+      <p class="step-desc">評估需求，決定需要拆成幾台車、哪種車型來完成，系統自動生成分派序號。</p>
+      <div class="step-img-row">
+        <img src="../assets/images/dispatch-step2a.png" alt="Step 2 分派任務（上）">
+        <img src="../assets/images/dispatch-step2b.png" alt="Step 2 分派任務（下）">
+      </div>
+    </div>
+
+    <div class="step-block">
+      <p class="step-label">Step 03</p>
+      <p class="step-title">調度大表</p>
+      <p class="step-desc">車輛調度主要由大表來快速判斷，可從調度大表快速調整車種、派車時間，Timeline 視圖即時顯示車趟銜接。</p>
+      <img class="step-img" src="../assets/images/dispatch-cover.png" alt="調度大表">
+    </div>
+
+    <div class="step-block">
+      <p class="step-label">角色化視圖</p>
+      <p class="step-title">不同單位的專屬畫面</p>
+      <p class="step-desc">依照各單位的工作需求，提供不同的資料深度與篩選視角。</p>
+      <img class="step-img" src="../assets/images/dispatch-views.png" alt="角色化視圖">
+    </div>
+
+    <div class="step-block">
+      <p class="step-label">行動裝置</p>
+      <p class="step-title">手機版檢視</p>
+      <p class="step-desc">現場工作人員可透過手機即時查看自己負責的車趟資訊。</p>
+      <div class="mobile-wrap">
+        <img src="../assets/images/dispatch-mobile.png" alt="手機版">
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>
